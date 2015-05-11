@@ -1,0 +1,10 @@
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction.Domain\bin\Debug\Auction.Domain.dll
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction.Domain\bin\Debug\Auction.Domain.pdb
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction.Domain\obj\Debug\Auction.Domain.csprojResolveAssemblyReference.cache
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction.Domain\obj\Debug\Auction.Domain.dll
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction.Domain\obj\Debug\Auction.Domain.pdb
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction.Domain\bin\Debug\Auction.Domain.dll.config
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction.Domain\bin\Debug\EntityFramework.dll
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction.Domain\bin\Debug\EntityFramework.SqlServer.dll
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction.Domain\bin\Debug\EntityFramework.xml
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction.Domain\bin\Debug\EntityFramework.SqlServer.xml
