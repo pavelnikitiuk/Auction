@@ -15,7 +15,6 @@ namespace Auction.Models
         [Required(ErrorMessage = "Please enter your last  name")]
         [Display(Name = "Last name")]
         public string LastName { get; set; }
-        //TODO add email validation
         [Required(ErrorMessage = "Please enter your email name")]
         [RegularExpression(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", ErrorMessage = "Please enter valid email")]
         [Display(Name = "Email")]

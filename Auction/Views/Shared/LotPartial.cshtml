@@ -1,0 +1,121 @@
+﻿@using System.Diagnostics.Eventing.Reader
+@using Auction.Domain.Entities
+
+@model Auction.Models.LotModel
+
+@using (Html.BeginForm("Add", "Bid"))
+{
+    @Html.ValidationSummary()
+    @Html.HiddenFor(x => x.Lot.CurrentPrice)
+    @Html.HiddenFor(x => x.Lot.LotID)
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-10 col-md-offset-1">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Your Bid</th>
+                            <th class="text-center">Start Price</th>
+                            <th class="text-center">@Html.DisplayNameFor(x => x.Lot.CurrentPrice)</th>
+                            <th> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="col-sm-8 col-md-6">
+                                <div class="media">
+                                    @if (Model.Lot.ImageData != null)
+                                    {
+                                        <img width="75" height="75" src='@Url.Action("GetImage", "Lots", new {Model.Lot.LotID})'alt="image"/>
+                                    }
+                                    else
+                                    {
+                                        <img width="75" height="75" src='~/Content/Image/image.jpg' alt="image" />
+                                    }
+                                    <div class="media-body">
+                                        <h4 class="media-heading"><a href="#">@Html.DisplayFor(x => x.Lot.Name)</a></h4>
+                                        <h5 class="media-heading"> by <a href="#">Brand name</a></h5>
+                                        <span>Status: </span><span class="text-success"><strong>@Html.DisplayFor(x => x.Lot.EndTime)</strong></span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="col-sm-1 col-md-1" style="text-align: center">
+                                @Html.TextBoxFor(x => x.BidAmount)
+                                @Html.ValidationMessageFor(x => x.BidAmount)
+                            </td>
+                            <td class="col-sm-1 col-md-1 text-center"><strong>@Html.DisplayFor(x => x.Lot.MinPrice)</strong></td>
+                            <td class="col-sm-1 col-md-1 text-center"><strong>@Html.DisplayFor(x => x.Lot.CurrentPrice)</strong></td>
+                            <td class="col-sm-1 col-md-1">
+                                <input type="submit" class="btn btn-success" value="Bid" />
+
+
+                            </td>
+                        </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*@using (Html.BeginForm("Add", "Bid"))
+    {
+
+    <h3>@Model.Lot.Name</h3>
+        @Model.Lot.Description
+        <h3>@Model.Lot.CurrentPrice.ToString("c")</h3>
+        <h4>@Model.Lot.MinPrice.ToString("c")</h4>
+
+
+
+            @Html.ValidationSummary()
+
+
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.BidAmount, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.BidAmount, new { @class = "form-control" })
+                </div>
+            </div>
+
+
+
+
+
+                @Html.ValidationMessageFor(x=>x.BidAmount)
+
+            @Html.HiddenFor(x => x.Lot.CurrentPrice)
+            @Html.HiddenFor(x => x.Lot.LotID)
+            //@Html.HiddenFor(x=> x.Lot.LotID)
+            //@Html.HiddenFor(x=>x.Lot.Bids)
+            <input type="submit" value="Bid!" />
+        }*@
+

@@ -8,11 +8,15 @@ using Auction.Domain.Entities;
 using Moq;
 using Ninject;
 using Auction.Domain.DBase;
+using Auction.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+
 namespace Auction.Infrastructure
 {
     public class NinjectControllerFactory : DefaultControllerFactory
     {
         public IKernel ninjectKernel { get; private set; }
+
         public NinjectControllerFactory()
         {
             ninjectKernel = new StandardKernel();
@@ -28,6 +32,8 @@ namespace Auction.Infrastructure
         private void AddBindings()
         {
             ninjectKernel.Bind<ILotsRepository>().To<LotRepository>();
+            ninjectKernel.Bind<IBidsRepository>().To<BidRepository>();
+
         }
     }
 }

@@ -1,18 +1,19 @@
-﻿@model IEnumerable<Auction.Domain.Entities.Lot>
-
+﻿@using Auction.Models
+@using Action = Antlr.Runtime.Misc.Action
+@model Auction.Models.LotsListViewModel
 @{
     ViewBag.Title = "List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Tovary</h2>
+<h2>List</h2>
 
-@foreach (var p in Model)
+@foreach (var l in Model.Lots)
 {
-    <div class="item">
-        <h3>@p.Name</h3>
-        @p.Description
-        @p.IsCompleted
-        <h4>@p.MinPrice.ToString("c")</h4>
-    </div>
+    
+    Auction.Models.LotModel t = new LotModel() { Lot = l, BidAmount = l.CurrentPrice ?? 0 };
+    @Html.Partial("LotPartial", t)
 }
+<ul class="pagination">
+    @Html.PageLinks(Model.PageModel, x => Url.Action("List", new { page = x, category = Model.CurrentCategory }))
+</ul>

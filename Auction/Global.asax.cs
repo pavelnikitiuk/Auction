@@ -17,6 +17,9 @@ namespace Auction
             ControllerBuilder.Current.SetControllerFactory(factory);
 
 
+
+
+
             var timer = new System.Timers.Timer() { Interval = 60000 };
             timer.Elapsed += (sender, args) => Workflow.LotEndChecker.SearchEndedLots();
             timer.Start();

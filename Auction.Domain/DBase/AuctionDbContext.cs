@@ -3,8 +3,9 @@ using Auction.Domain.Entities;
 
 namespace Auction.Domain.DBase
 {
-    class AuctionDbContext:DbContext
+    public class AuctionDbContext:DbContext
     {
         public DbSet<Lot> Lots { get; set; }
+        public DbSet<Bid> Bids { get; set; }
     }
 }
