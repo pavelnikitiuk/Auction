@@ -6,7 +6,7 @@ namespace Auction.Domain.Abstract
 {
     public interface ILotsRepository
     {
-        void EndLot(Lot lot);
+        void Remove(Lot lot);
         void AddBid(Lot lot, decimal bidAmount, string userId);
         void AddLot(Lot lot);
         void Save(Lot lot);

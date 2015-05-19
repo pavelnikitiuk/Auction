@@ -11,7 +11,7 @@ namespace Auction.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("AictionUserDb")
+            : base("AuctionUserDb")
         {
         }
     }

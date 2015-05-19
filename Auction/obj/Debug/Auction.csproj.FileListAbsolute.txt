@@ -67,3 +67,12 @@ D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction\bin\ActionMailer.
 D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction\bin\ActionMailer.Net.xml
 D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction\bin\ActionMailer.Net.Mvc.pdb
 D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction\bin\ActionMailer.Net.Mvc.xml
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction\bin\Common.Logging.Core.dll
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction\bin\Common.Logging.dll
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction\bin\Quartz.dll
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction\bin\Common.Logging.pdb
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction\bin\Common.Logging.xml
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction\bin\Common.Logging.Core.pdb
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction\bin\Common.Logging.Core.xml
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction\bin\Quartz.pdb
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction\bin\Quartz.xml

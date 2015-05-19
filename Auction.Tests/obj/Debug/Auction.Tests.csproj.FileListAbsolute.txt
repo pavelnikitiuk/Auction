@@ -50,3 +50,12 @@ D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction.Tests\bin\Debug\N
 D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction.Tests\bin\Debug\Auction.Domain.dll
 D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction.Tests\bin\Debug\Ninject.xml
 D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction.Tests\bin\Debug\Auction.Domain.pdb
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction.Tests\bin\Debug\Quartz.dll
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction.Tests\bin\Debug\Common.Logging.Core.dll
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction.Tests\bin\Debug\Common.Logging.dll
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction.Tests\bin\Debug\Quartz.pdb
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction.Tests\bin\Debug\Quartz.xml
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction.Tests\bin\Debug\Common.Logging.Core.pdb
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction.Tests\bin\Debug\Common.Logging.Core.xml
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction.Tests\bin\Debug\Common.Logging.pdb
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction.Tests\bin\Debug\Common.Logging.xml

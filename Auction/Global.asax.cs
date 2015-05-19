@@ -1,7 +1,11 @@
-﻿using System.Web.Mvc;
+﻿using System.Data.Entity;
+using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Auction.Infrastructure;
+using Auction.ModelBinder;
+using Auction.Models;
+using Auction.Scheduler;
 
 namespace Auction
 {
@@ -9,6 +13,8 @@ namespace Auction
     {
         protected void Application_Start()
         {
+   //         Database.SetInitializer<ApplicationDbContext>(new AppDbInitializer());
+
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
@@ -17,12 +23,13 @@ namespace Auction
             ControllerBuilder.Current.SetControllerFactory(factory);
 
 
+            ModelBinders.Binders.DefaultBinder = new XSSModelBinder();
 
+            JobScheduler.Start();
 
-
-            var timer = new System.Timers.Timer() { Interval = 60000 };
-            timer.Elapsed += (sender, args) => Workflow.LotEndChecker.SearchEndedLots();
-            timer.Start();
+            //var timer = new System.Timers.Timer() { Interval = 60000 };
+            //timer.Elapsed += (sender, args) => Workflow.LotEndChecker.SearchEndedLots();
+            //timer.Start();
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Auction.Domain.EmailSender
 
         public  void Send(EmailModel model)
         {
-            string smtpHost = "smtp.gmail.com";
+            string smtpHost = "smtp.gmail.com";///
             int smtpPort = 587;
             string login = model.From;
             string pass =model.Pass;

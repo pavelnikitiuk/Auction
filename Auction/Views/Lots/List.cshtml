@@ -6,14 +6,19 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>List</h2>
-
+\<h2>@Model.CurrentCategory</h2>
+@{ int i = 1; }
 @foreach (var l in Model.Lots)
 {
-    
-    Auction.Models.LotModel t = new LotModel() { Lot = l, BidAmount = l.CurrentPrice ?? 0 };
-    @Html.Partial("LotPartial", t)
+    <div id=@i>
+        @Html.Partial("LotPartial", new LotModel() {Lot = l, BidAmount = l.CurrentPrice ?? 0,NumOnPage = i})
+    </div>
+    i++;
 }
 <ul class="pagination">
-    @Html.PageLinks(Model.PageModel, x => Url.Action("List", new { page = x, category = Model.CurrentCategory }))
+    
+    @Html.PageLinks(Model.PageModel, x => Url.Action("List", new {page = x, category = Model.CurrentCategory}))
 </ul>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

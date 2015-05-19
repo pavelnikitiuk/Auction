@@ -9,7 +9,7 @@ namespace Auction.Domain.Entities
     public class Lot
     {
         [ScaffoldColumn(false)]
-        public int? LotID { get; set; }
+        public int LotID { get; set; }
         [Required]
         public string Name { get; set; }
         [DataType(DataType.MultilineText)]
@@ -18,7 +18,7 @@ namespace Auction.Domain.Entities
         [Display(Name = "Start Price")]
         public decimal MinPrice { get; set; }
         [Required]
-        public string Category { get; set; }
+        public string Category { get; set; }///
 
         [Display(Name = "End of Lot")]
         [DataType(DataType.DateTime)]

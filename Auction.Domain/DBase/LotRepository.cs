@@ -8,10 +8,16 @@ namespace Auction.Domain.DBase
 {
     public class LotRepository : ILotsRepository
     {
-
-
         private AuctionDbContext context = new AuctionDbContext();
-
+        public void Remove(Lot lot)
+        {
+            Lot dbEntry = context.Lots.Find(lot.LotID);
+            if (dbEntry != null)
+            {
+                context.Lots.Remove(dbEntry);
+                context.SaveChanges();
+            }
+        }
         public void AddLot(Lot lot)
         {
             context.Lots.Add(lot);
@@ -22,13 +28,12 @@ namespace Auction.Domain.DBase
             Lot db = context.Lots.Find(lot.LotID);
             if (db != null)
             {
-                db.Bids.Add(new Bid() {BidAmount = bidAmount, DatePlaced = DateTime.Now, Lot = lot,UserId = userId});
+                db.Bids.Add(new Bid() { BidAmount = bidAmount, DatePlaced = DateTime.Now, Lot = lot, UserId = userId });
                 db.CurrentPrice = bidAmount;
             }
 
             context.SaveChanges();
         }
-
         public void Save(Lot lot)
         {
             if (lot.LotID == 0)
@@ -39,21 +44,7 @@ namespace Auction.Domain.DBase
             {
                 Lot db = context.Lots.Find(lot.LotID);
                 if (db != null)
-                    db.Bids.Add(new Bid(){BidAmount = 10,DatePlaced = DateTime.Now, Lot = lot});
-            }
-            context.SaveChanges();
-        }
-        public void EndLot(Lot lot)
-        {
-            if (lot.LotID == 0)
-            {
-                context.Lots.Add(lot);
-            }
-            else
-            {
-                Lot db = context.Lots.Find(lot.LotID);
-                if (db != null)
-                    db.IsCompleted = true;
+                    db.Bids.Add(new Bid{ BidAmount = 10, DatePlaced = DateTime.Now, Lot = lot });
             }
             context.SaveChanges();
         }

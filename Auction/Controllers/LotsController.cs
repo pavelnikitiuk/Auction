@@ -19,10 +19,10 @@ namespace Auction.Controllers
         {
             repository = productRepository;
             this.bidsRepository = bidsRepository;
-            this.bidsRepository.Save();
+         //   this.bidsRepository.Save();
         }
         [HttpPost]
-        public ActionResult SearchResult(string name,int page = 1)
+        public ActionResult SearchResult(string name, int page = 1)
         {
             var lots =
                 repository.Lots.Where(
@@ -30,7 +30,7 @@ namespace Auction.Controllers
                         p.Name == name
                         )
                     .OrderBy(p => p.LotID)
-                    .Skip((page - 1)*PageSize)
+                    .Skip((page - 1) * PageSize)
                     .Take(PageSize);
             LotsListViewModel model = new LotsListViewModel
             {
@@ -43,10 +43,24 @@ namespace Auction.Controllers
                         repository.Lots.Count() :
                         lots.Count()
                 },
-                
+
             };
-                return View(model);
-           
+            return View(model);
+
+        }
+        [Authorize(Roles = "admin")]
+        public ActionResult Remove(int lotId, string url)
+        {
+            Lot lot = repository.Lots.FirstOrDefault(p => p.LotID == lotId);
+            if (lot != null)
+            {
+                if (ModelState.IsValid)
+                    repository.Remove(lot);
+
+            }
+            if (url != null)
+                return Redirect(url);
+            return RedirectToAction("List", "Lots");
         }
         public FileContentResult GetImage(int lotId)
         {

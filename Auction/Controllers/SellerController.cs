@@ -8,6 +8,7 @@ using Auction.Domain.Entities;
 
 namespace Auction.Controllers
 {
+    [Authorize]
     public class SellerController : Controller
     {
         private ILotsRepository lotsRepository;
@@ -20,25 +21,23 @@ namespace Auction.Controllers
         [HttpGet]
         public ActionResult Sell()
         {
-            return View(new Lot());
+            return View(new Lot(){EndTime = DateTime.Now});
         }
 
         [HttpPost]
         public ActionResult Sell(Domain.Entities.Lot model, HttpPostedFileBase image)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+                return View(model);
+            if (image != null)
             {
-                if (image != null)
-                {
-                    model.ImageMimeType = image.ContentType;
-                    model.ImageData = new byte[image.ContentLength];
-                    image.InputStream.Read(model.ImageData, 0, image.ContentLength);
-                }
-                model.CurrentPrice = model.MinPrice;
-                model.IsCompleted = false;
-                lotsRepository.AddLot(model);
-                
+                model.ImageMimeType = image.ContentType;
+                model.ImageData = new byte[image.ContentLength];
+                image.InputStream.Read(model.ImageData, 0, image.ContentLength);
             }
+            model.CurrentPrice = model.MinPrice;
+            model.IsCompleted = false;
+            lotsRepository.AddLot(model);
             return RedirectToAction("List", "Lots");
         }
 	}

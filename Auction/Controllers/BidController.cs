@@ -17,19 +17,23 @@ namespace Auction.Controllers
             this.lotsRepository = lotsRepository;
         }
         [HttpPost]
-        public RedirectToRouteResult Add(LotModel model)
+        [Authorize]
+        public ActionResult Add(LotModel model)
         {
-            if (ModelState.IsValid)
-            {
-                Lot lot = lotsRepository.Lots.FirstOrDefault(p => p.LotID == model.Lot.LotID);
+            Lot lot = lotsRepository.Lots.FirstOrDefault(p => p.LotID == model.Lot.LotID);
                 if (lot != null)
                 {
-                    lotsRepository.AddBid(lot, model.BidAmount,User.Identity.GetUserId());
+                    if (ModelState.IsValid)
+                    {
+                        {
+                            lotsRepository.AddBid(lot, model.BidAmount, User.Identity.GetUserId());
+                            lot.CurrentPrice = model.BidAmount;
+                            return PartialView("LotPartial", new LotModel() {Lot = lot,NumOnPage = model.NumOnPage});
+                        }
+                    }
+                 
                 }
-                return RedirectToAction("List", "Lots");
-            }
-            return RedirectToAction("List", "Lots",model);
-            
+            return PartialView("LotPartial", new LotModel() { Lot = lot,NumOnPage = model.NumOnPage});
         }
     }
 }
