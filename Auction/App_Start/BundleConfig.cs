@@ -33,6 +33,7 @@ namespace Auction
                       "~/Content/site.css"));
             bundles.Add(new StyleBundle("~/Content/bdate").Include(
                      "~/Content/bootstrap-datetimepicker.css"));
+            
             bundles.Add(new StyleBundle("~/Content/bootsrap-social").Include(
                       "~/Content/bootstrap-social.css", "~/Content/font-awesome.css"));
             

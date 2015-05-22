@@ -76,3 +76,7 @@ D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction\bin\Common.Loggin
 D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction\bin\Common.Logging.Core.xml
 D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction\bin\Quartz.pdb
 D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction\bin\Quartz.xml
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction\obj\Debug\Auction.Migrations.Category.resources
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction\obj\Debug\Auction.Migrations.Image.resources
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction\obj\Debug\Auction.Properties.Resources.resources
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction\obj\Debug\Auction.Migrations.Image1.resources

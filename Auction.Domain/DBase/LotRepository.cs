@@ -14,15 +14,12 @@ namespace Auction.Domain.DBase
             Lot dbEntry = context.Lots.Find(lot.LotID);
             if (dbEntry != null)
             {
+                context.Images.RemoveRange(dbEntry.Images);
                 context.Lots.Remove(dbEntry);
                 context.SaveChanges();
             }
         }
-        public void AddLot(Lot lot)
-        {
-            context.Lots.Add(lot);
-            context.SaveChanges();
-        }
+        
         public void AddBid(Lot lot, decimal bidAmount, string userId)
         {
             Lot db = context.Lots.Find(lot.LotID);

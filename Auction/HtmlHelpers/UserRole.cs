@@ -9,9 +9,9 @@ using Auction.Models;
 
 namespace Auction.HtmlHelpers
 {
-    public static class AdminHelpers
+    public static class UserRole
     {
-        public static MvcHtmlString RemoveHelper(this MvcHtmlString value, bool evaluation)
+        public static MvcHtmlString IsRole(this MvcHtmlString value, bool evaluation)
         {
             return evaluation?value:MvcHtmlString.Empty;
             

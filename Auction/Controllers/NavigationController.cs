@@ -9,18 +9,16 @@ namespace Auction.Controllers
 {
     public class NavigationController : Controller
     {
-        private ILotsRepository lotsRepository;
-        public NavigationController(ILotsRepository lotsRepository)
+        private ICategoriesRepository categoriesRepository;
+        public NavigationController(ICategoriesRepository categoriesRepository)
         {
-            this.lotsRepository = lotsRepository;
+            this.categoriesRepository = categoriesRepository;
         }
 
         public PartialViewResult Menu()
         {
-            IEnumerable<string> categories = lotsRepository.Lots
-                .Select(x => x.Category)
-                .Distinct()
-                .OrderBy(x => x);
+            IEnumerable<string> categories =
+                categoriesRepository.Categories.Select(x => x.CategoryName).OrderBy(x => x);
             return PartialView(categories);
 
         }

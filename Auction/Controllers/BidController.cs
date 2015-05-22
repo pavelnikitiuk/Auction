@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using Auction.Anatation;
 using Auction.Domain.Abstract;
 using Auction.Domain.Entities;
 using Auction.Models;
@@ -8,7 +9,6 @@ using Microsoft.AspNet.Identity;
 
 namespace Auction.Controllers
 {
-    [Authorize]
     public class BidController : Controller
     {
         private ILotsRepository lotsRepository;
@@ -17,7 +17,8 @@ namespace Auction.Controllers
             this.lotsRepository = lotsRepository;
         }
         [HttpPost]
-        [Authorize]
+        
+        [AjaxAuthorize]
         public ActionResult Add(LotModel model)
         {
             Lot lot = lotsRepository.Lots.FirstOrDefault(p => p.LotID == model.Lot.LotID);

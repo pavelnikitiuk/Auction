@@ -33,6 +33,7 @@ namespace Auction.Infrastructure
         {
             ninjectKernel.Bind<ILotsRepository>().To<LotRepository>();
             ninjectKernel.Bind<IBidsRepository>().To<BidRepository>();
+            ninjectKernel.Bind<ICategoriesRepository>().To<CategoryRepository>();
 
         }
     }

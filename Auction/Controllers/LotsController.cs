@@ -12,20 +12,29 @@ namespace Auction.Controllers
 {
     public class LotsController : Controller
     {
-        private ILotsRepository repository;
+        private ILotsRepository lotsRepository;
+        private ICategoriesRepository categoriesRepository;
         private IBidsRepository bidsRepository;
         public int PageSize = 4;
-        public LotsController(ILotsRepository productRepository, IBidsRepository bidsRepository)
+        public LotsController(ILotsRepository lotsRepository, IBidsRepository bidsRepository, ICategoriesRepository categoriesRepository)
         {
-            repository = productRepository;
+            this.lotsRepository = lotsRepository;
             this.bidsRepository = bidsRepository;
-         //   this.bidsRepository.Save();
+            this.categoriesRepository = categoriesRepository;
         }
+
+        [HttpGet]
+        public ActionResult Lot(int lotId)
+        {
+            var lot = lotsRepository.Lots.FirstOrDefault(x => x.LotID == lotId);
+            return View(lot);
+        }
+
         [HttpPost]
         public ActionResult SearchResult(string name, int page = 1)
         {
             var lots =
-                repository.Lots.Where(
+                lotsRepository.Lots.Where(
                     p =>
                         p.Name == name
                         )
@@ -40,7 +49,7 @@ namespace Auction.Controllers
                     CurrentPage = page,
                     ItemsPerPage = PageSize,
                     TotalItems = name == null ?
-                        repository.Lots.Count() :
+                        lotsRepository.Lots.Count() :
                         lots.Count()
                 },
 
@@ -51,23 +60,28 @@ namespace Auction.Controllers
         [Authorize(Roles = "admin")]
         public ActionResult Remove(int lotId, string url)
         {
-            Lot lot = repository.Lots.FirstOrDefault(p => p.LotID == lotId);
+            Lot lot = lotsRepository.Lots.FirstOrDefault(p => p.LotID == lotId);
             if (lot != null)
             {
                 if (ModelState.IsValid)
-                    repository.Remove(lot);
+                    lotsRepository.Remove(lot);
 
             }
             if (url != null)
                 return Redirect(url);
             return RedirectToAction("List", "Lots");
         }
-        public FileContentResult GetImage(int lotId)
+        public FileContentResult GetImage(int lotId, int num)
         {
-            Lot prod = repository.Lots.FirstOrDefault(p => p.LotID == lotId);
+            Lot prod = lotsRepository.Lots.FirstOrDefault(p => p.LotID == lotId);
             if (prod != null)
             {
-                return File(prod.ImageData, prod.ImageMimeType);
+                if (prod.Images.First() != null)
+                {
+                    var image = prod.Images[num];
+                    return File(image.ImageData, image.ImageMimeType);
+                }
+                return File(System.IO.File.ReadAllBytes("~/Content/Image/image.jpg"), Properties.Resources.DefaultImageType);
             }
             return null;
         }
@@ -75,14 +89,14 @@ namespace Auction.Controllers
         {
             LotsListViewModel model = new LotsListViewModel
             {
-                Lots = repository.Lots.Where(p => category == null || p.Category == category).OrderBy(p => p.LotID).Skip((page - 1) * PageSize).Take(PageSize),
+                Lots = lotsRepository.Lots.Where(p => category == null || p.Category.CategoryName == category).OrderBy(p => p.LotID).Skip((page - 1) * PageSize).Take(PageSize),
                 PageModel = new PageModel
                 {
                     CurrentPage = page,
                     ItemsPerPage = PageSize,
                     TotalItems = category == null ?
-                        repository.Lots.Count() :
-                        repository.Lots.Where(e => e.Category == category).Count()
+                        lotsRepository.Lots.Count() :
+                        lotsRepository.Lots.Count(e => e.Category.CategoryName == category)
                 },
                 CurrentCategory = category
             };

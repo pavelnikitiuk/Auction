@@ -8,7 +8,6 @@ namespace Auction.Domain.Abstract
     {
         void Remove(Lot lot);
         void AddBid(Lot lot, decimal bidAmount, string userId);
-        void AddLot(Lot lot);
         void Save(Lot lot);
         IQueryable<Lot> Lots { get; }
     }

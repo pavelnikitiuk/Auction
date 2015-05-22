@@ -188,12 +188,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Anatation\AjaxAuthorizeAttribute.cs" />
     <Compile Include="Anatation\CurrentPriceAtribute.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BidController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LotsController.cs" />
@@ -203,11 +205,23 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HtmlHelpers\PagingHelper.cs" />
-    <Compile Include="HtmlHelpers\AdminHelpers.cs" />
+    <Compile Include="HtmlHelpers\UserRole.cs" />
     <Compile Include="Infrastructure\NinjectControllerFactory.cs" />
     <Compile Include="Migrations\201505132246021_Initial.cs" />
     <Compile Include="Migrations\201505132246021_Initial.Designer.cs">
       <DependentUpon>201505132246021_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505192033576_Category.cs" />
+    <Compile Include="Migrations\201505192033576_Category.Designer.cs">
+      <DependentUpon>201505192033576_Category.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505201128149_Image.cs" />
+    <Compile Include="Migrations\201505201128149_Image.Designer.cs">
+      <DependentUpon>201505201128149_Image.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505202019299_Image1.cs" />
+    <Compile Include="Migrations\201505202019299_Image1.Designer.cs">
+      <DependentUpon>201505202019299_Image1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelBinder\XSSModelBinder.cs" />
@@ -217,7 +231,14 @@
     <Compile Include="Models\LotModel.cs" />
     <Compile Include="Models\LotsListViewModel.cs" />
     <Compile Include="Models\PageModel.cs" />
+    <Compile Include="Models\RolesModel.cs" />
+    <Compile Include="Models\SellModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Scheduler\CheckEndJob.cs" />
     <Compile Include="Scheduler\JobScheduler.cs" />
     <Compile Include="Startup.cs" />
@@ -361,7 +382,6 @@
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
@@ -383,6 +403,11 @@
     <Content Include="Views\Navigation\Menu.cshtml" />
     <Content Include="Views\Seller\Sell.cshtml" />
     <Content Include="Views\Lots\SearchResult.cshtml" />
+    <Content Include="Views\Lots\Lot.cshtml" />
+    <Content Include="Views\Shared\LotImagesPartial.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Admin\ManageUserRoles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -404,6 +429,19 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201505132246021_Initial.resx">
       <DependentUpon>201505132246021_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505192033576_Category.resx">
+      <DependentUpon>201505192033576_Category.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505201128149_Image.resx">
+      <DependentUpon>201505201128149_Image.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505202019299_Image1.resx">
+      <DependentUpon>201505202019299_Image1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

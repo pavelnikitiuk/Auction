@@ -9,6 +9,7 @@ namespace Auction.Domain.Entities
     public class Lot
     {
         [ScaffoldColumn(false)]
+        [Key]
         public int LotID { get; set; }
         [Required]
         public string Name { get; set; }
@@ -17,8 +18,8 @@ namespace Auction.Domain.Entities
         public string Description { get; set; }
         [Display(Name = "Start Price")]
         public decimal MinPrice { get; set; }
-        [Required]
-        public string Category { get; set; }///
+        [ScaffoldColumn(false)]
+        
 
         [Display(Name = "End of Lot")]
         [DataType(DataType.DateTime)]
@@ -31,14 +32,13 @@ namespace Auction.Domain.Entities
         [ScaffoldColumn(false)]
         public decimal? CurrentPrice { get; set; }
 
-        public byte[] ImageData { get; set; }
-
-        [HiddenInput(DisplayValue = false)]
-        public string ImageMimeType { get; set; }
+        
         [HiddenInput(DisplayValue = false)]
 
         public virtual ICollection<Bid> Bids { get; set; }
-
-        
+        [HiddenInput(DisplayValue = false)]
+        public virtual List<Image> Images { get; set; }
+        [HiddenInput(DisplayValue = false)]
+        public virtual Category Category { get; set; }
     }
 }

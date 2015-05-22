@@ -78,14 +78,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\IBidsRepository.cs" />
-    <Compile Include="Abstract\IEmailSender.cs" />
+    <Compile Include="Abstract\ICategoriesRepository.cs" />
     <Compile Include="Abstract\ILotsRepository.cs" />
     <Compile Include="DBase\AuctionDbContext.cs" />
     <Compile Include="DBase\BidRepository.cs" />
+    <Compile Include="DBase\CategoryRepository.cs" />
     <Compile Include="DBase\LotRepository.cs" />
-    <Compile Include="EmailSender\EmailModel.cs" />
-    <Compile Include="EmailSender\GoogleEmailSender.cs" />
     <Compile Include="Entities\Bid.cs" />
+    <Compile Include="Entities\Category.cs" />
+    <Compile Include="Entities\Comment.cs" />
+    <Compile Include="Entities\Image.cs" />
     <Compile Include="Entities\Lot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

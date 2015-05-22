@@ -79,7 +79,7 @@ namespace Auction.Controllers
             {
                 var user = new ApplicationUser()
                 {
-                    UserName = model.Email,
+                    UserName = model.Username,
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     Email = model.Email
@@ -87,13 +87,11 @@ namespace Auction.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    await UserManager.AddToRoleAsync(user.Id, "user");
                     await SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Home");
                 }
-                else
-                {
-                    AddErrors(result);
-                }
+                AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
@@ -233,7 +231,7 @@ namespace Auction.Controllers
             return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel
             {
                 UserName = loginInfo.DefaultUserName,
-                Email = email != null? email.Value:"",
+                Email = email != null ? email.Value : "",
                 FirstName = names[0],
                 LastName = names[1]
             });

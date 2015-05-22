@@ -3,21 +3,23 @@
 
 @model Auction.Models.LotModel
 
-@using (Ajax.BeginForm("Add", "Bid",new AjaxOptions
+@using (Ajax.BeginForm("Add", "Bid", new AjaxOptions
 {
     UpdateTargetId = Model.NumOnPage.ToString(),
+    OnSuccess = "validate"
 }
-    
+
     ))
 {
+    @Html.AntiForgeryToken()
     @Html.ValidationSummary()
     @Html.HiddenFor(x => x.Lot.CurrentPrice)
     @Html.HiddenFor(x => x.Lot.LotID)
-    @Html.HiddenFor(x=>x.Lot.Category)
-    @Html.HiddenFor(x=>x.Lot.Description)
-    @Html.HiddenFor(x=>x.Lot.MinPrice)
-    @Html.HiddenFor(x=>x.Lot.Name)
-    @Html.HiddenFor(x=>x.NumOnPage)
+    @Html.HiddenFor(x => x.Lot.Category)
+    @Html.HiddenFor(x => x.Lot.Description)
+    @Html.HiddenFor(x => x.Lot.MinPrice)
+    @Html.HiddenFor(x => x.Lot.Name)
+    @Html.HiddenFor(x => x.NumOnPage)
     <div class="container">
         <div class="row">
             <div class="col-sm-12 col-md-10 col-md-offset-1">
@@ -29,27 +31,24 @@
                             <th class="text-center">Start Price</th>
                             <th class="text-center">@Html.DisplayNameFor(x => x.Lot.CurrentPrice)</th>
                             <th> </th>
-                            <th>@Html.ActionLink("X", "Remove", "Lots", new
+                            <th>
+                                @Html.ActionLink("X", "Remove", "Lots", new
                                 {
-                                    lotId = Model.Lot.LotID, 
+                                    lotId = Model.Lot.LotID,
                                     url = HttpContext.Current.Request.Url.OriginalString
-                                },null).RemoveHelper(User.IsInRole("admin"))</th>
+                                }, null).IsRole(User.IsInRole("admin"))
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td class="col-sm-8 col-md-6">
                                 <div class="media">
-                                    @if (Model.Lot.ImageData != null)
-                                    {
-                                        <img width="75" height="75" src='@Url.Action("GetImage", "Lots", new {Model.Lot.LotID})'alt="image"/>
-                                    }
-                                    else
-                                    {
-                                        <img width="75" height="75" src='~/Content/Image/image.jpg' alt="image" />
-                                    }
+                                    <div class="item">
+                                        <img width="75" height="75" src="@Url.Action("GetImage", "Lots", new {lotId = Model.Lot.LotID,num = 0})" />
+                                    </div>
                                     <div class="media-body">
-                                        <h4 class="media-heading"><a href="#">@Html.DisplayFor(x => x.Lot.Name)</a></h4>
+                                        <h4 class="media-heading">@Html.ActionLink(Html.DisplayFor(x => x.Lot.Name).ToString(), "Lot", "Lots", new { lotId = Model.Lot.LotID }, null)</h4>
                                         <span>Status: </span><span class="text-success"><strong>@Html.DisplayFor(x => x.Lot.EndTime)</strong></span>
                                     </div>
                                 </div>
@@ -57,15 +56,12 @@
                             <td class="col-sm-1 col-md-1" style="text-align: center">
                                 @Html.TextBoxFor(x => x.BidAmount)
                                 @Html.ValidationMessageFor(x => x.BidAmount)
-                                <div id="loading" style="display: none" class="label-info">
-                                    <p>>Wait...</p>
-                                </div>
+
                             </td>
                             <td class="col-sm-1 col-md-1 text-center"><strong>@Html.DisplayFor(x => x.Lot.MinPrice)</strong></td>
                             <td class="col-sm-1 col-md-1 text-center"><strong>@Html.DisplayFor(x => x.Lot.CurrentPrice)</strong></td>
                             <td class="col-sm-1 col-md-1">
                                 <input type="submit" class="btn btn-success" value="Bid" />
-
 
                             </td>
                         </tr>
@@ -73,11 +69,13 @@
             </div>
         </div>
     </div>
-
-
-
 }
-
+<script type="text/javascript">
+    function validate(data) {
+        if (data.Redirect)
+            window.location = data.Redirect;
+    }
+</script>
 
 
 

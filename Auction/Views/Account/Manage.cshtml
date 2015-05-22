@@ -4,8 +4,9 @@
     ViewBag.Title = "Manage Account";
 }
 
-<h2>@ViewBag.Title.</h2>
+@Html.ActionLink("Admin Control","ManageUserRoles","Admin").IsRole(User.IsInRole("admin"))
 
+<h2>@ViewBag.Title.</h2>
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div class="row">
     <div class="col-md-12">

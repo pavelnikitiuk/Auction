@@ -1,0 +1,47 @@
+﻿@model Auction.Domain.Entities.Lot
+@{
+
+    ViewBag.Title = "Lot";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    @Html.Partial("LotImagesPartial", Model)
+</div>
+
+<div class="items">
+    <div class="btn-group">
+        <button type="button" class="btn  btn-danger">
+            Bid!
+        </button>
+    </div>
+</div>
+
+<div class="container" >
+    
+    <div class="container">
+
+        <div class="col-md-12">
+            <ul class="nav nav-tabs ">
+
+                <li class="active"><a href="#service-one" data-toggle="tab">DESCRIPTION</a></li>
+                <li><a href="#service-two" data-toggle="tab">Coments</a></li>
+
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="service-one">
+                    <section class="container ">
+                        <h3>@Model.Name</h3>
+                        <span>@Model.Description</span>
+                    </section>
+                </div>
+                <div class="tab-pane fade" id="service-two">
+                    <section class="container">
+                        
+                        <input type="submit"/>
+                    </section>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+</div>
