@@ -118,12 +118,15 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="DefaultImage" xml:space="preserve">
-    <value>~/Content/Image/image.jpeg</value>
+    <value>~/Content/Image/image.png</value>
   </data>
   <data name="DefaultImageType" xml:space="preserve">
     <value>jpeg</value>
   </data>
   <data name="LoginViewModel_RememberMe" xml:space="preserve">
     <value>Remember me?</value>
+  </data>
+  <data name="BidControllerBidAmount" xml:space="preserve">
+    <value>Minimal bid can be</value>
   </data>
 </root>

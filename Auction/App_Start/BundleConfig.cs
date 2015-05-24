@@ -15,12 +15,15 @@ namespace Auction
 
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
-
+            
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
-            bundles.Add(new ScriptBundle("~/bundles/TimeCircles").Include(
-                        "~/Scripts/TimeCircles.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/clock").Include(
+            //          "~/Scripts/custom.js",
+            //          "~/Scripts/plugins.js"));
+            
             bundles.Add(new ScriptBundle("~/bundles/bootsrapdate").Include(
                         "~/Scripts/jquery-ui-{version}.js").Include("~/Scripts/moment.js").Include(
                         "~/Scripts/bootstrap-datetimepicker.js"));
@@ -33,9 +36,15 @@ namespace Auction
                       "~/Content/site.css"));
             bundles.Add(new StyleBundle("~/Content/bdate").Include(
                      "~/Content/bootstrap-datetimepicker.css"));
-            
+
+            bundles.Add(new StyleBundle("~/Content/soon").Include(
+                     "~/Content/soon.css"));
+            bundles.Add(new StyleBundle("~/Content/shop").Include(
+                     "~/Content/shop-homepage.css"));
+
             bundles.Add(new StyleBundle("~/Content/bootsrap-social").Include(
                       "~/Content/bootstrap-social.css", "~/Content/font-awesome.css"));
+            
             
 
         }

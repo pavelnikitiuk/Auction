@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Web.Mvc;
 using Auction.Domain.Abstract;
 using Auction.Domain.Entities;
 
@@ -8,7 +7,7 @@ namespace Auction.Domain.DBase
 {
     public class LotRepository : ILotsRepository
     {
-        private AuctionDbContext context = new AuctionDbContext();
+        private readonly AuctionDbContext context = new AuctionDbContext();
         public void Remove(Lot lot)
         {
             Lot dbEntry = context.Lots.Find(lot.LotID);
@@ -19,16 +18,27 @@ namespace Auction.Domain.DBase
                 context.SaveChanges();
             }
         }
-        
+
         public void AddBid(Lot lot, decimal bidAmount, string userId)
         {
-            Lot db = context.Lots.Find(lot.LotID);
-            if (db != null)
-            {
-                db.Bids.Add(new Bid() { BidAmount = bidAmount, DatePlaced = DateTime.Now, Lot = lot, UserId = userId });
-                db.CurrentPrice = bidAmount;
-            }
+            var db = context.Lots.Find(lot.LotID);
+            if (db == null)
+                return;
+            db.Bids.Add(new Bid() { BidAmount = bidAmount, DatePlaced = DateTime.Now, Lot = lot, UserId = userId });
+            db.CurrentPrice = bidAmount;
+            context.SaveChanges();
+        }
 
+        public void Edit(Lot lot, Category category)
+        {
+            var dbLot = context.Lots.Find(lot.LotID);
+            if (dbLot == null)
+                return;
+            var dbCategory = context.Categoryes.Find(category.CategoryId);
+            if (dbCategory == null)
+                return;
+            dbLot.Category.Lots.Remove(dbLot);
+            dbCategory.Lots.Add(lot);
             context.SaveChanges();
         }
         public void Save(Lot lot)
@@ -41,7 +51,7 @@ namespace Auction.Domain.DBase
             {
                 Lot db = context.Lots.Find(lot.LotID);
                 if (db != null)
-                    db.Bids.Add(new Bid{ BidAmount = 10, DatePlaced = DateTime.Now, Lot = lot });
+                    db.Bids.Add(new Bid { BidAmount = 10, DatePlaced = DateTime.Now, Lot = lot });
             }
             context.SaveChanges();
         }

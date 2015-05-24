@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using Auction.Domain.Abstract;
 using Auction.Domain.Entities;
+using Auction.Models;
+
 namespace Auction.Controllers
 {
     [RequireHttps]
@@ -13,10 +15,20 @@ namespace Auction.Controllers
 
         private ILotsRepository repository;
 
-        
-        public ViewResult Index()
+        public HomeController(ILotsRepository repository)
         {
-            return View();
+            this.repository = repository;
+        }
+
+        [HttpGet]
+        public ActionResult Index()
+        {
+            List<Lot> models = new List<Lot>();
+            models.AddRange(repository.Lots.Where(x => x.IsCompleted == false)
+                .OrderBy(x => x.EndTime).Take(7));
+            if(models.Any())
+                return View(models);
+            return RedirectToAction("About","Home");
         }
 
         public ActionResult About()

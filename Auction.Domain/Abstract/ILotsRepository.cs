@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Auction.Domain.Entities;
 
 namespace Auction.Domain.Abstract
@@ -9,6 +8,7 @@ namespace Auction.Domain.Abstract
         void Remove(Lot lot);
         void AddBid(Lot lot, decimal bidAmount, string userId);
         void Save(Lot lot);
+        void Edit(Lot lot, Category category);
         IQueryable<Lot> Lots { get; }
     }
 }

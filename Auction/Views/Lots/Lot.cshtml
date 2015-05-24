@@ -1,47 +1,107 @@
 ﻿@model Auction.Domain.Entities.Lot
 @{
 
-    ViewBag.Title = "Lot";
+    ViewBag.Title = Model.Name;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<h1>@Model.Name</h1>
+<br/>
 <div class="container">
     @Html.Partial("LotImagesPartial", Model)
 </div>
 
-<div class="items">
-    <div class="btn-group">
-        <button type="button" class="btn  btn-danger">
-            Bid!
-        </button>
-    </div>
-</div>
 
-<div class="container" >
-    
+
+
+<br/>
+<div class="container">
+
     <div class="container">
 
         <div class="col-md-12">
             <ul class="nav nav-tabs ">
-
-                <li class="active"><a href="#service-one" data-toggle="tab">DESCRIPTION</a></li>
-                <li><a href="#service-two" data-toggle="tab">Coments</a></li>
+                <li class="active"><a href="#service-one" data-toggle="tab">MAKE BID</a></li>
+                <li><a href="#service-two" data-toggle="tab">DESCRIPTION</a></li>
+                
 
             </ul>
             <div class="tab-content">
                 <div class="tab-pane fade in active" id="service-one">
+                    <section id="header">
+                        <div class="container">
+                            <h1 style="color:crimson">Current price</h1>
+                            <h2 style="color: crimson">@Model.CurrentPrice$</h2>
+                            <div id="timer">
+                                <h1 id="message" style="color: red"></h1>
+                                <div id="days" class="timer_box"></div>
+                                <div id="hours" class="timer_box"></div>
+                                <div id="minutes" class="timer_box"></div>
+                                <div id="seconds" class="timer_box"></div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                </div>
+                <div class="tab-pane fade" id="service-two">
                     <section class="container ">
                         <h3>@Model.Name</h3>
                         <span>@Model.Description</span>
                     </section>
-                </div>
-                <div class="tab-pane fade" id="service-two">
-                    <section class="container">
-                        
-                        <input type="submit"/>
-                    </section>
+
                 </div>
             </div>
             <hr>
         </div>
     </div>
 </div>
+@section Styles
+{
+    @Styles.Render("~/Content/soon")
+}
+@section Scripts
+{
+    <script type="text/javascript">
+        (function ($) {
+            var launch = new Date(@Model.EndTime.Year, @(Model.EndTime.Month-1),@(Model.EndTime.Day), @Model.EndTime.Hour, @Model.EndTime.Minute);
+
+            var message = $('#message');
+            var days = $('#days');
+            var hours = $('#hours');
+            var minutes = $('#minutes');
+            var seconds = $('#seconds');
+
+            function setDate() {
+                var now = new Date();
+                if (launch < now) {
+                    days.remove();
+                    hours.remove();
+                    minutes.remove();
+                    seconds.remove();
+                    $('#bid').remove();
+                    message.html('<h2>auction has been completed</h2>');
+                }
+                else {
+                    var s = -now.getTimezoneOffset() * 60 + (launch.getTime() - now.getTime()) / 1000;
+                    var d = Math.floor(s / 86400);
+                    days.html('<h1>' + d + '</h1><h2>Day' + (d > 1 ? 's' : ''), '</h2>');
+                    s -= d * 86400;
+
+                    var h = Math.floor(s / 3600);
+                    hours.html('<h1>' + h + '</h1><h2>Hour' + (h > 1 ? 's' : ''), '</h2>');
+                    s -= h * 3600;
+
+                    var m = Math.floor(s / 60);
+                    minutes.html('<h1>' + m + '</h1><h2>Minute' + (m > 1 ? 's' : ''), '</h2>');
+
+                    s = Math.floor(s - m * 60);
+                    seconds.html('<h1>' + s + '</h1><h2>Second' + (s > 1 ? 's' : ''), '</h2>');
+                    setTimeout(setDate, 1000);
+
+                    message.html('auction completed in...');
+                }
+            }
+
+            setDate();
+        })(jQuery);
+    </script>
+}

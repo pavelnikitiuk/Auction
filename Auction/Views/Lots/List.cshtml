@@ -1,24 +1,27 @@
 ﻿@using Auction.Models
-@using Action = Antlr.Runtime.Misc.Action
 @model Auction.Models.LotsListViewModel
 @{
     ViewBag.Title = "List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}
+
 <h2>@Model.CurrentCategory</h2>
 @{ int i = 1; }
 @foreach (var l in Model.Lots)
 {
-    <div id=@i>
-        @Html.Partial("LotPartial", new LotModel() {Lot = l, BidAmount = l.CurrentPrice ?? 0,NumOnPage = i})
-    </div>
-    i++;
-}
-<ul class="pagination">
+
+    Html.RenderPartial("LotPartial", new LotModel() { Lot = l, BidAmount = l.CurrentPrice ?? 0, NumOnPage = i++ });
     
-    @Html.PageLinks(Model.PageModel, x => Url.Action("List", new {page = x, category = Model.CurrentCategory}))
-</ul>
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
 }
+
+<ul class="pagination">
+
+    @Html.PageLinks(Model.PageModel, x => Url.Action("List", new { page = x, category = Model.CurrentCategory }))
+</ul>
+
+

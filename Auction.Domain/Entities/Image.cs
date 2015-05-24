@@ -12,9 +12,11 @@ namespace Auction.Domain.Entities
     {
         [Key]
         public int ImageId { get; set; }
+        
         public byte[] ImageData { get; set; }
 
         [HiddenInput(DisplayValue = false)]
+        
         public string ImageMimeType { get; set; }
         public virtual Lot Lot { get; set; }
     }

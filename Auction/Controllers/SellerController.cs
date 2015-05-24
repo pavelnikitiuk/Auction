@@ -16,51 +16,58 @@ namespace Auction.Controllers
         private ILotsRepository lotsRepository;
         // ReSharper disable once InconsistentNaming
         private ICategoriesRepository categoriesRepository;
+
         public SellerController(ILotsRepository lotsRepository, ICategoriesRepository categoriesRepository)
         {
             this.categoriesRepository = categoriesRepository;
             this.lotsRepository = lotsRepository;
         }
+
         //
         // GET: /Seller/
         [HttpGet]
         public ActionResult Sell()
         {
 
-            ViewBag.Categories = categoriesRepository.Categories.Select(x => x.CategoryName).OrderBy(x => x);
-            return View(new Lot
+            return View(new SellModel
             {
-                EndTime = DateTime.Now.AddHours(1),
-                MinPrice = 1
+                Lot = new Lot
+                {
+                    MinPrice = 1
+                },
+                Categories = categoriesRepository.Categories.Select(x => x.CategoryName).OrderBy(x => x)
             });
         }
 
         [HttpPost]
-        public ActionResult Sell(Domain.Entities.Lot model, HttpPostedFileBase[] image, string categ)
+        public ActionResult Sell(SellModel model, string categ)
         {
-            ViewBag.Categories = categoriesRepository.Categories.Select(x => x.CategoryName).OrderBy(x => x);
-            var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key, x.Value.Errors }).ToArray();
-            if (!ModelState.IsValid || !categoriesRepository.Categories.Any(x => x.CategoryName == categ))
-                return View(model);
-            model.Images = new List<Image>();
+            //var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key, x.Value.Errors }).ToArray();
+            if (!ModelState.IsValid )
+                return View(new SellModel
+                {
+                    Lot = model.Lot,
+                    Categories = categoriesRepository.Categories.Select(x => x.CategoryName).OrderBy(x => x)
+                });
+            model.Lot.Images = new List<Image>();
             int i = 0;
-            foreach (var img in image)
+            foreach (var img in model.Files)
             {
                 if (img != null)
                 {
-                    model.Images.Add(new Image()
+                    model.Lot.Images.Add(new Image()
                     {
                         ImageMimeType = img.ContentType,
                         ImageData = new byte[img.ContentLength],
                     });
-                    img.InputStream.Read(model.Images[i++].ImageData, 0, img.ContentLength);
+                    img.InputStream.Read(model.Lot.Images[i++].ImageData, 0, img.ContentLength);
                 }
             }
-            model.CurrentPrice = model.MinPrice;
-            model.IsCompleted = false;
+            model.Lot.CurrentPrice = model.Lot.MinPrice;
+            model.Lot.IsCompleted = false;
             var cat = categoriesRepository.Categories.FirstOrDefault(x => x.CategoryName == categ);
-            categoriesRepository.AddLot(cat, model);
-            return RedirectToAction("Lot", "Lots",new {lotId= model.LotID});
+            categoriesRepository.AddLot(cat, model.Lot);
+            return RedirectToAction("Lot", "Lots", new { lotId = model.Lot.LotID });
         }
     }
 }

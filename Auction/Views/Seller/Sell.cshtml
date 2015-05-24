@@ -1,22 +1,52 @@
-﻿@model Auction.Domain.Entities.Lot
+﻿@model Auction.Models.SellModel
 @{
     ViewBag.Title = "Sell";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Sell</h2>
+@section Styles
+{
+    @Styles.Render("~/Content/bdate")
+}
 @section Scripts {
-    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/bootsrapdate")
 
     @Scripts.Render("~/bundles/bootstrap")
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(function () {
             $('#datetimepicker').datetimepicker({
-                format: 'MM.DD.YYYY HH:mm'
+                format: 'DD/MMM/YYYY HH:mm'
             });
         });
+        var i = 1;
+    </script>
+    <script type="text/javascript">
+        jQuery.validator.unobtrusive.adapters.add(
+    'filesize', ['maxsize'], function (options) {
+        options.rules['filesize'] = options.params;
+        if (options.message) {
+            options.messages['filesize'] = options.message;
+        }
+    }
+);
+
+        jQuery.validator.addMethod('filesize', function (value, element, params) {
+            if (element.files.length < 1) {
+                // No files selected
+                return true;
+            }
+
+            if (!element.files || !element.files[0].size) {
+                // This browser doesn't support the HTML5 API
+                return true;
+            }
+            var total = 0;
+            for (var i = 0; i < element.files.length; i++)
+                total += element.files[i].size;
+            return total < params.maxsize;
+        }, '');
     </script>
 
 
@@ -27,48 +57,57 @@
     @Html.ValidationSummary()
     @Html.AntiForgeryToken()
     <div class="form-group">
-        @Html.LabelFor(x => x.Name)
-        @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
-        @Html.ValidationMessageFor(x => x.Name)
+        @Html.LabelFor(x =>x.Lot.Name)
+        @Html.TextBoxFor(x => x.Lot.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Lot.Name)
     </div>
-    List<SelectListItem> list = (from category in (IEnumerable<string>)ViewBag.Categories
-                                 select new SelectListItem
-                                 {
-                                     Text = category
-                                 }).ToList();
+    List<SelectListItem> list = (from category in Model.Categories select new SelectListItem { Text = category }).ToList();
 
+    
     <div class="form-group">
         <label>Category</label>
         @Html.DropDownList("categ", list, new { @class = "form-control" })
 
     </div>
     <div class="form-group">
-        @Html.LabelFor(x => x.Description)
-        @Html.TextAreaFor(x => x.Description, new { @class = "form-control" })
+        @Html.LabelFor(x => x.Lot.Description)
+        @Html.TextAreaFor(x => x.Lot.Description, new { @class = "form-control" })
     </div>
     <div class="form-group">
-        @Html.LabelFor(x => x.MinPrice)
-        @Html.TextBoxFor(x => x.MinPrice, new { @class = "form-control" })
+        @Html.LabelFor(x => x.Lot.MinPrice)
+        @Html.TextBoxFor(x => x.Lot.MinPrice, new { @class = "form-control" })
     </div>
+
     <div class="form-group">
-        @Html.LabelFor(x => x.EndTime)
-        <div class='input-group date' id='datetimepicker'>
-            <span class="input-group-addon">
-                <span class="glyphicon glyphicon-calendar"></span>
-            </span>
-            @Html.TextBoxFor(x => x.EndTime, new { @class = "form-control" })
+        @Html.LabelFor(x => x.Lot.EndTime)
+
+
+        <div class="row">
+            <div class='col-sm-6'>
+                <div class="form-group">
+                    <div class='input-group date' id='datetimepicker' style="color: black">
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                        @Html.TextBoxFor(x => x.Lot.EndTime, new { @class = "form-control" })
+
+                    </div>
+                </div>
+            </div>
         </div>
+
     </div>
 
 
 
 
 
-    <div>
-
-            <input class="btn btn-info" multiple type="file" name="Image" value="Upload new image:" />
-        </div>
-    <input type="submit" class="btn btn-success" />
+    <div id="files" class="form-group">
+        <label>Upload image</label>
+        @Html.TextBoxFor(x=>x.Files,null,new {type = "file",multiple = "multiple", id='0'})
+    </div>
+    <br />
+    <input type="submit"  class="btn btn-success"value="Sell!" />
 }
 
 

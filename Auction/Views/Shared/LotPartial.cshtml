@@ -1,136 +1,80 @@
-﻿@using System.Diagnostics.Eventing.Reader
-@using Auction.Domain.Entities
+﻿@model Auction.Models.LotModel
 
-@model Auction.Models.LotModel
+<div id="@Model.NumOnPage">
+    @using (Ajax.BeginForm("Add", "Bid", new AjaxOptions { UpdateTargetId = Model.NumOnPage.ToString() }
 
-@using (Ajax.BeginForm("Add", "Bid", new AjaxOptions
-{
-    UpdateTargetId = Model.NumOnPage.ToString(),
-    OnSuccess = "validate"
-}
+        ))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary()
+        @Html.HiddenFor(x => x.Lot.CurrentPrice)
+        @Html.HiddenFor(x => x.Lot.LotID)
+        @Html.HiddenFor(x => x.Lot.Category.CategoryName)
+        @Html.HiddenFor(x => x.Lot.Category.CategoryId)
+        @Html.HiddenFor(x => x.Lot.Description)
+        @Html.HiddenFor(x => x.Lot.MinPrice)
+        @Html.HiddenFor(x => x.Lot.Name)
+        @Html.HiddenFor(x => x.Lot.EndTime)
+        @Html.HiddenFor(x => x.NumOnPage)
 
-    ))
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary()
-    @Html.HiddenFor(x => x.Lot.CurrentPrice)
-    @Html.HiddenFor(x => x.Lot.LotID)
-    @Html.HiddenFor(x => x.Lot.Category)
-    @Html.HiddenFor(x => x.Lot.Description)
-    @Html.HiddenFor(x => x.Lot.MinPrice)
-    @Html.HiddenFor(x => x.Lot.Name)
-    @Html.HiddenFor(x => x.NumOnPage)
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12 col-md-10 col-md-offset-1">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Lot</th>
-                            <th>Your Bid</th>
-                            <th class="text-center">Start Price</th>
-                            <th class="text-center">@Html.DisplayNameFor(x => x.Lot.CurrentPrice)</th>
-                            <th> </th>
-                            <th>
-                                @Html.ActionLink("X", "Remove", "Lots", new
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-10 col-md-offset-1">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Lot</th>
+                                <th>Your Bid</th>
+                                <th class="text-center">Start Price</th>
+                                <th class="text-center">@Html.DisplayNameFor(x => x.Lot.CurrentPrice)</th>
+                                <th> </th>
+                                <th>
+                                    @Html.ActionLink("Edit", "Edit", "Lots", new { lotId = Model.Lot.LotID }, null).IsRole(User.IsInRole("admin"))
+                                </th>
+                                <th>
+                                    @Html.ActionLink("X", "Remove", "Lots", new
                                 {
                                     lotId = Model.Lot.LotID,
                                     url = HttpContext.Current.Request.Url.OriginalString
                                 }, null).IsRole(User.IsInRole("admin"))
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="col-sm-8 col-md-6">
-                                <div class="media">
-                                    <div class="item">
-                                        <img width="75" height="75" src="@Url.Action("GetImage", "Lots", new {lotId = Model.Lot.LotID,num = 0})" />
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="col-sm-8 col-md-6">
+                                    <div class="media">
+                                        <div class="item">
+                                            <img width="75" height="75" src="@Url.Action("GetImage", "Lots", new {lotId = Model.Lot.LotID, num = 0})" />
+
+                                        </div>
+                                        <div class="media-body">
+                                            <h4 class="media-heading">@Html.ActionLink(Html.DisplayFor(x => x.Lot.Name).ToString(), "Lot", "Lots", new { lotId = Model.Lot.LotID }, null)</h4>
+                                            <span>Lot end at: </span><span class="text-success"><strong>@Html.DisplayFor(x => x.Lot.EndTime)</strong></span>
+                                        </div>
                                     </div>
-                                    <div class="media-body">
-                                        <h4 class="media-heading">@Html.ActionLink(Html.DisplayFor(x => x.Lot.Name).ToString(), "Lot", "Lots", new { lotId = Model.Lot.LotID }, null)</h4>
-                                        <span>Status: </span><span class="text-success"><strong>@Html.DisplayFor(x => x.Lot.EndTime)</strong></span>
+                                </td>
+                                <td class="col-sm-1 col-md-1" style="text-align: center">
+                                    <div class="form-group">
+                                        @Html.TextBoxFor(x => x.BidAmount,new {@class = "form-control",style="min-width: 100px"})
+                                        @Html.ValidationMessageFor(x => x.BidAmount)
                                     </div>
-                                </div>
-                            </td>
-                            <td class="col-sm-1 col-md-1" style="text-align: center">
-                                @Html.TextBoxFor(x => x.BidAmount)
-                                @Html.ValidationMessageFor(x => x.BidAmount)
 
-                            </td>
-                            <td class="col-sm-1 col-md-1 text-center"><strong>@Html.DisplayFor(x => x.Lot.MinPrice)</strong></td>
-                            <td class="col-sm-1 col-md-1 text-center"><strong>@Html.DisplayFor(x => x.Lot.CurrentPrice)</strong></td>
-                            <td class="col-sm-1 col-md-1">
-                                <input type="submit" class="btn btn-success" value="Bid" />
+                                </td>
+                                <td class="col-sm-1 col-md-1 text-center"><strong>@Html.DisplayFor(x => x.Lot.MinPrice)</strong></td>
+                                <td class="col-sm-1 col-md-1 text-center"><strong>@Html.DisplayFor(x => x.Lot.CurrentPrice)</strong></td>
+                                <td class="col-sm-1 col-md-1">
 
-                            </td>
-                        </tr>
-                </table>
-            </div>
-        </div>
-    </div>
-}
-<script type="text/javascript">
-    function validate(data) {
-        if (data.Redirect)
-            window.location = data.Redirect;
-    }
-</script>
+                                </td>
 
+                            </tr>
 
+                        </tbody>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@*@using (Html.BeginForm("Add", "Bid"))
-    {
-
-    <h3>@Model.Lot.Name</h3>
-        @Model.Lot.Description
-        <h3>@Model.Lot.CurrentPrice.ToString("c")</h3>
-        <h4>@Model.Lot.MinPrice.ToString("c")</h4>
-
-
-
-            @Html.ValidationSummary()
-
-
-
-            <div class="form-group">
-                @Html.LabelFor(m => m.BidAmount, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(m => m.BidAmount, new { @class = "form-control" })
+                    </table>
                 </div>
             </div>
-
-
-
-
-
-                @Html.ValidationMessageFor(x=>x.BidAmount)
-
-            @Html.HiddenFor(x => x.Lot.CurrentPrice)
-            @Html.HiddenFor(x => x.Lot.LotID)
-            //@Html.HiddenFor(x=> x.Lot.LotID)
-            //@Html.HiddenFor(x=>x.Lot.Bids)
-            <input type="submit" value="Bid!" />
-        }*@
-
+        </div>
+    }
+</div>

@@ -1,7 +1,7 @@
 ﻿@model Auction.Domain.Entities.Lot
 <section class="section-white">
-    <div class="container">
-        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+    <div class="container img-rounded">
+        <div id="carousel" class="carousel slide" data-ride="carousel">
             <!-- Indicators -->
             <ol class="carousel-indicators">
                 @for (int i = 0; i < Model.Images.Count; i++)
@@ -25,10 +25,10 @@
 
 
             <!-- Controls -->
-            <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+            <a class="left carousel-control" href="#carousel" data-slide="prev">
                 <span class="glyphicon glyphicon-chevron-left"></span>
             </a>
-            <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+            <a class="right carousel-control" href="#carousel" data-slide="next">
                 <span class="glyphicon glyphicon-chevron-right"></span>
             </a>
         </div>

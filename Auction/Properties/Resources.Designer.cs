@@ -61,7 +61,16 @@ namespace Auction.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ~/Content/Image/image.jpeg.
+        ///   Looks up a localized string similar to Minimal bid can be.
+        /// </summary>
+        internal static string BidControllerBidAmount {
+            get {
+                return ResourceManager.GetString("BidControllerBidAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ~/Content/Image/image.png.
         /// </summary>
         internal static string DefaultImage {
             get {

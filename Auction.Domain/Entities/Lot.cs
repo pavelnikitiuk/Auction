@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using System.ComponentModel.DataAnnotations;
+using Auction.Anatation;
 
 namespace Auction.Domain.Entities
 {
@@ -23,8 +24,8 @@ namespace Auction.Domain.Entities
 
         [Display(Name = "End of Lot")]
         [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy hh:mm}", ApplyFormatInEditMode = true)]
-
+        [DisplayFormat(DataFormatString = "{0:dd/MMM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
+        [EndTimeAtribute]
         public DateTime EndTime { get; set; }
 
         [ScaffoldColumn(false)]

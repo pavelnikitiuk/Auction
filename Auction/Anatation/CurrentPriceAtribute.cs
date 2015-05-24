@@ -23,10 +23,10 @@ namespace Auction.Anatation
                     return ValidationResult.Success;
                 }
                 {
-                    return new ValidationResult("Bit mus be greather then current price");
+                    return new ValidationResult("Bit must be greather then current price");
                 }
             }
-            return new ValidationResult("Bit mus be greather then current price");
+            return new ValidationResult("Bit must be greather then current price");
         }
     }
 }
