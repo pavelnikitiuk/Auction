@@ -28,14 +28,12 @@ namespace Auction.Controllers
         [HttpGet]
         public ActionResult Sell()
         {
-
+            var cat = categoriesRepository.Categories.Select(x => x.CategoryName).OrderBy(x => x);
+            IEnumerable<SelectListItem> list = (from category in cat select new SelectListItem { Text = category }).ToList();
             return View(new SellModel
             {
-                Lot = new Lot
-                {
-                    MinPrice = 1
-                },
-                Categories = categoriesRepository.Categories.Select(x => x.CategoryName).OrderBy(x => x)
+                MinPrice = 1,
+                Categories =  list
             });
         }
 
@@ -43,31 +41,40 @@ namespace Auction.Controllers
         public ActionResult Sell(SellModel model, string categ)
         {
             //var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key, x.Value.Errors }).ToArray();
-            if (!ModelState.IsValid )
-                return View(new SellModel
-                {
-                    Lot = model.Lot,
-                    Categories = categoriesRepository.Categories.Select(x => x.CategoryName).OrderBy(x => x)
-                });
-            model.Lot.Images = new List<Image>();
+            if (!ModelState.IsValid)
+            {
+                var c = categoriesRepository.Categories.Select(x => x.CategoryName).OrderBy(x => x);
+                model.Categories = (from category in c select new SelectListItem { Text = category }).ToList();
+                
+                return View(model);
+            }
+            Lot lot = new Lot
+            {
+                Images = new List<Image>(),
+                CurrentPrice =  model.MinPrice,
+                Name = model.Name,
+                MinPrice = model.MinPrice,
+                Description = model.Description,
+                EndTime = model.EndTime,
+                IsCompleted = false
+            };
             int i = 0;
             foreach (var img in model.Files)
             {
                 if (img != null)
                 {
-                    model.Lot.Images.Add(new Image()
+                    lot.Images.Add(new Image()
                     {
                         ImageMimeType = img.ContentType,
                         ImageData = new byte[img.ContentLength],
                     });
-                    img.InputStream.Read(model.Lot.Images[i++].ImageData, 0, img.ContentLength);
+                    img.InputStream.Read(lot.Images[i++].ImageData, 0, img.ContentLength);
                 }
             }
-            model.Lot.CurrentPrice = model.Lot.MinPrice;
-            model.Lot.IsCompleted = false;
+            
             var cat = categoriesRepository.Categories.FirstOrDefault(x => x.CategoryName == categ);
-            categoriesRepository.AddLot(cat, model.Lot);
-            return RedirectToAction("Lot", "Lots", new { lotId = model.Lot.LotID });
+            categoriesRepository.AddLot(cat, lot);
+            return RedirectToAction("Lot", "Lots", new { lotId = lot.LotID });
         }
     }
 }

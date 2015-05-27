@@ -127,6 +127,8 @@ namespace Auction.Controllers
                 : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
                 : message == ManageMessageId.Error ? "An error has occurred."
                 : "";
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewBag.IsSeller = user.IsSeller;
             ViewBag.HasLocalPassword = HasPassword();
             ViewBag.ReturnUrl = Url.Action("Manage");
             return View();
@@ -181,6 +183,15 @@ namespace Auction.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+        [HttpPost]
+        [Authorize]
+        public JsonResult MakeSeller()
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            user.IsSeller = false;
+            UserManager.Update(user);
+            return null;
         }
 
         //

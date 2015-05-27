@@ -5,8 +5,9 @@ using Auction.Domain.Entities;
 
 namespace Auction.Domain.DBase
 {
-    public class LotRepository : ILotsRepository
+    public class LotRepository : ILotsRepository, IDisposable
     {
+        private bool disposed = false;
         private readonly AuctionDbContext context = new AuctionDbContext();
         public void Remove(Lot lot)
         {
@@ -58,6 +59,25 @@ namespace Auction.Domain.DBase
         public IQueryable<Lot> Lots
         {
             get { return context.Lots; }
+        }
+           public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if(disposed)
+                return;
+            if (disposing)
+                context.Dispose();
+            disposed = true;
+        }
+
+        ~LotRepository()
+        {
+            Dispose(false);
         }
     }
 }

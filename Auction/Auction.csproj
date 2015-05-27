@@ -72,6 +72,18 @@
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Data.Edm, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Data.Edm.5.6.2\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Data.OData.5.6.2\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Data.Services.Client.5.6.2\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
@@ -100,6 +112,23 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.2.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Configuration">
+      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.1.8.0.0\lib\net35-full\Microsoft.WindowsAzure.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Diagnostics">
+      <HintPath>..\packages\AzureSDK2.2DLLs.1.0.0\lib\Microsoft.WindowsAzure.Diagnostics.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.ServiceRuntime">
+      <HintPath>..\packages\AzureSDK2.2DLLs.1.0.0\lib\Microsoft.WindowsAzure.ServiceRuntime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage">
+      <HintPath>..\packages\WindowsAzure.Storage.4.3.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.StorageClient">
+      <HintPath>..\packages\AzureSDK2.2DLLs.1.0.0\lib\Microsoft.WindowsAzure.StorageClient.dll</HintPath>
+    </Reference>
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.2.1502.0911\lib\net40\Moq.dll</HintPath>
     </Reference>
@@ -117,6 +146,10 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Spatial, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\System.Spatial.5.6.2\lib\net40\System.Spatial.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -209,21 +242,9 @@
     <Compile Include="HtmlHelpers\PagingHelper.cs" />
     <Compile Include="HtmlHelpers\UserRole.cs" />
     <Compile Include="Infrastructure\NinjectControllerFactory.cs" />
-    <Compile Include="Migrations\201505132246021_Initial.cs" />
-    <Compile Include="Migrations\201505132246021_Initial.Designer.cs">
-      <DependentUpon>201505132246021_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201505192033576_Category.cs" />
-    <Compile Include="Migrations\201505192033576_Category.Designer.cs">
-      <DependentUpon>201505192033576_Category.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201505201128149_Image.cs" />
-    <Compile Include="Migrations\201505201128149_Image.Designer.cs">
-      <DependentUpon>201505201128149_Image.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201505202019299_Image1.cs" />
-    <Compile Include="Migrations\201505202019299_Image1.Designer.cs">
-      <DependentUpon>201505202019299_Image1.cs</DependentUpon>
+    <Compile Include="Migrations\201505271810423_Migration.cs" />
+    <Compile Include="Migrations\201505271810423_Migration.Designer.cs">
+      <DependentUpon>201505271810423_Migration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelBinder\XSSModelBinder.cs" />
@@ -233,9 +254,11 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LotModel.cs" />
     <Compile Include="Models\LotsListViewModel.cs" />
+    <Compile Include="Models\ModeratorModel.cs" />
     <Compile Include="Models\PageModel.cs" />
     <Compile Include="Models\RolesModel.cs" />
     <Compile Include="Models\SellModel.cs" />
+    <Compile Include="Models\VewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -359,6 +382,9 @@
     <None Include="job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\PublishProfiles\pavelnikitiuk - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\pavelnikitiuk - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\pavelnikitiuk.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
@@ -412,12 +438,15 @@
     <Content Include="Views\Shared\LotPartial.cshtml" />
     <Content Include="Views\Navigation\Menu.cshtml" />
     <Content Include="Views\Seller\Sell.cshtml" />
-    <Content Include="Views\Lots\SearchResult.cshtml" />
     <Content Include="Views\Lots\Lot.cshtml" />
     <Content Include="Views\Shared\LotImagesPartial.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Admin\ManageUserRoles.cshtml" />
     <Content Include="Views\Lots\Edit.cshtml" />
+    <Content Include="Views\Admin\ModeraotorControl.cshtml" />
+    <Content Include="Views\Shared\CategoriesPartial.cshtml" />
+    <Content Include="Views\Admin\SellersPartial.cshtml" />
+    <Content Include="Views\Lots\SearchLot.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -437,17 +466,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201505132246021_Initial.resx">
-      <DependentUpon>201505132246021_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505192033576_Category.resx">
-      <DependentUpon>201505192033576_Category.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505201128149_Image.resx">
-      <DependentUpon>201505201128149_Image.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505202019299_Image1.resx">
-      <DependentUpon>201505202019299_Image1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201505271810423_Migration.resx">
+      <DependentUpon>201505271810423_Migration.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

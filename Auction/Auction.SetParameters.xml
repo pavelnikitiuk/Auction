@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <setParameter name="IIS Web Application Name" value="http://pavelnikitiuk.somee.com" />
+  <setParameter name="AuctionDbContext-Web.config Connection String" value="Data Source=(localdb)\v11.0;AttachDbFilename=|DataDirectory|\LotsDB.mdf;Initial Catalog=LotsDB;Integrated Security=True; MultipleActiveResultSets=True;" />
+  <setParameter name="AuctionUserDb-Web.config Connection String" value="Data Source=(LocalDb)\v11.0;AttachDbFilename=|DataDirectory|\AuctionUserDb.mdf;Initial Catalog=AuctionUserDb;Integrated Security=True" />
+  <setParameter name="Auction.Models.ApplicationDbContext-Web.config Connection String" value="Auction.Models.ApplicationDbContext_ConnectionString" />
+</parameters>

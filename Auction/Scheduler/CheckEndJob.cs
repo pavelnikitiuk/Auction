@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -13,16 +14,18 @@ using Quartz;
 
 namespace Auction.Scheduler
 {
-    public class CheckEndJob : IJob
+    public class CheckEndJob : IJob, IDisposable
     {
+        private bool disposed;
         private UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
         private AuctionDbContext context = new AuctionDbContext();
         public void Execute(IJobExecutionContext con)
         {
             var lots = context.Lots.Where(x => x.EndTime <= DateTime.Now && x.IsCompleted == false);
-            foreach (var lot in lots)
+            foreach (var lot in lots.ToList())
             {
                 lot.IsCompleted = true;
+                context.SaveChanges();
                 if (lot.Bids.Any())
                 {
                     var winerId = lot.Bids.Last().UserId;
@@ -43,7 +46,30 @@ namespace Auction.Scheduler
                     }
                 }
             }
-            context.SaveChanges();
+
+        }
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed)
+                return;
+            if (disposing)
+            {
+                userManager.Dispose();
+                context.Dispose();
+            }
+
+            disposed = true;
+        }
+
+        ~CheckEndJob()
+        {
+            Dispose(false);
         }
     }
 }

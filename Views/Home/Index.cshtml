@@ -1,0 +1,85 @@
+﻿@model List<Auction.Domain.Entities.Lot>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Styles
+{
+    @Styles.Render("~/Content/shop")
+}
+<div class="container">
+
+    <div class="row">
+
+
+
+        <div class="col-md-11">
+
+            <div class="row carousel-holder thumbnail">
+
+                <div class="col-md-12">
+                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            @for (int i = 0; i < Model[0].Images.Count; i++)
+                            {
+                                <li data-target="#carousel-example-generic" data-slide-to="@i" class="active"></li>
+                            }
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <img class="slide-image" src="@Url.Action("GetImage", "Lots", new {LotId = @Model[0].LotID, num = 0})" alt="">
+                            </div>
+                            @for (int i = 1; i < Model[0].Images.Count; i++)
+                            {
+                                <div class="item">
+                                    <img class="slide-image" src="@Url.Action("GetImage", "Lots", new {LotId = @Model[0].LotID, num = i})" alt="">
+                                </div>
+                            }
+
+
+
+                        </div>
+                        <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                        <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                        </a>
+                    </div>
+
+                </div>
+                <div class="caption">
+                    <h4 class="pull-right">$@Model[0].CurrentPrice</h4>
+                    <h4>
+                        <a href="@Url.Action("Lot","Lots",new {lotId = Model[0].LotID})">@Model[0].Name</a>
+                    </h4>
+                </div>
+            </div>
+
+            <div class="row">
+                @for (int i = 1; i < Model.Count; i++)
+                {
+                    <div class="col-sm-4 col-lg-4 col-md-4">
+                        <div class="thumbnail">
+                            <img src="@Url.Action("GetImage", "Lots", new { lotId = Model[i].LotID, num = 0 })" alt="">
+                        <div class="caption">
+                            <h4 class="pull-right">$@Model[i].CurrentPrice</h4>
+                            <h4>
+                                <a href="@Url.Action("Lot","Lots",new {lotId = Model[i].LotID})">@Model[i].Name</a>
+                            </h4>
+                        </div>
+                        
+                    </div>
+                </div>
+                }
+
+
+                
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

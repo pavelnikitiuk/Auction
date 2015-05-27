@@ -1,0 +1,28 @@
+﻿@using Auction.Models
+@model LotsListViewModel
+@{
+    ViewBag.Title = "Search Result";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Search Result</h2>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}
+
+<h2>@Model.CurrentCategory</h2>
+@{ int i = 1; }
+<div class="container img-rounded" style="background-color: white; margin-top: 20px; color: black">
+    @foreach (var l in Model.Lots)
+    {
+
+        Html.RenderPartial("LotPartial", new LotModel() { Lot = l, BidAmount = l.CurrentPrice, NumOnPage = i++ });
+
+    }
+</div>
+<ul class="pagination">
+
+    @Html.PageLinks(Model.PageModel, x => Url.Action("SearchLot", new { page = x, search = Model.CurrentCategory }))
+</ul>
+

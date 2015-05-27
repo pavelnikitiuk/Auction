@@ -1,21 +1,22 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Auction.Properties;
 
 namespace Auction.Models
 {
     public class ExternalLoginConfirmationViewModel
     {
-        [Required(ErrorMessage = "Please enter your account name")]
+        [Required(ErrorMessageResourceType = typeof (Resources), ErrorMessageResourceName = "UsernameErrorMessage")]
         [Display(Name = "User name")]
         public string UserName { get; set; }
 
-        [Required(ErrorMessage = "Please enter your first name")]
+        [Required(ErrorMessageResourceType = typeof (Resources), ErrorMessageResourceName = "FirstNameErrorMessage")]
         [Display(Name = "First name")]
         public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "Please enter your last  name")]
+        [Required(ErrorMessageResourceType = typeof (Resources), ErrorMessageResourceName = "LastNameErrorMessage")]
         [Display(Name = "Last name")]
         public string LastName { get; set; }
-        [Required(ErrorMessage = "Please enter your email name")]
+        [Required(ErrorMessageResourceType = typeof (Resources), ErrorMessageResourceName = "EmailErrorMessage")]
         [RegularExpression(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", ErrorMessage = "Please enter valid email")]
         [Display(Name = "Email")]
         public string Email { get; set; }
@@ -36,8 +37,9 @@ namespace Auction.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [Compare("NewPassword", ErrorMessageResourceType = typeof (Resources), ErrorMessageResourceName = "ComparePasswordsErrorMessage")]
         public string ConfirmPassword { get; set; }
+        public bool IsSeler { get; set; }
     }
 
     public class LoginViewModel
@@ -82,7 +84,7 @@ namespace Auction.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare("Password", ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = "ComparePasswordsErrorMessage")]
         public string ConfirmPassword { get; set; }
     }
 }

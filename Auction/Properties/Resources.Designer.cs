@@ -70,6 +70,24 @@ namespace Auction.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sorry auction is end.
+        /// </summary>
+        internal static string BidControllerEnd {
+            get {
+                return ResourceManager.GetString("BidControllerEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The new password and confirmation password do not match..
+        /// </summary>
+        internal static string ComparePasswordsErrorMessage {
+            get {
+                return ResourceManager.GetString("ComparePasswordsErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ~/Content/Image/image.png.
         /// </summary>
         internal static string DefaultImage {
@@ -88,11 +106,56 @@ namespace Auction.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please enter your email name.
+        /// </summary>
+        internal static string EmailErrorMessage {
+            get {
+                return ResourceManager.GetString("EmailErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter your first name.
+        /// </summary>
+        internal static string FirstNameErrorMessage {
+            get {
+                return ResourceManager.GetString("FirstNameErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter your last  name.
+        /// </summary>
+        internal static string LastNameErrorMessage {
+            get {
+                return ResourceManager.GetString("LastNameErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remember me?.
         /// </summary>
         internal static string LoginViewModel_RememberMe {
             get {
                 return ResourceManager.GetString("LoginViewModel_RememberMe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown category.
+        /// </summary>
+        internal static string LotsControllerUnknownCategory {
+            get {
+                return ResourceManager.GetString("LotsControllerUnknownCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter your account name.
+        /// </summary>
+        internal static string UsernameErrorMessage {
+            get {
+                return ResourceManager.GetString("UsernameErrorMessage", resourceCulture);
             }
         }
     }

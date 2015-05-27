@@ -23,8 +23,8 @@ namespace Auction
               "",
               new
               {
-                  controller = "Lots",
-                  action = "List",
+                  controller = "Home",
+                  action = "Index",
                   category = (string)null,
                   page = 1
               }

@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using Auction.Domain.Abstract;
 using Auction.Domain.Entities;
 using Auction.Models;
+using Auction.Properties;
 
 namespace Auction.Controllers
 {
@@ -10,12 +11,37 @@ namespace Auction.Controllers
     {
         private ILotsRepository lotsRepository;
         private ICategoriesRepository categoriesRepository;
-        public int PageSize = 4;
+        private const int PageSize = 10;
         public LotsController(ILotsRepository lotsRepository, ICategoriesRepository categoriesRepository)
         {
             this.lotsRepository = lotsRepository;
             this.categoriesRepository = categoriesRepository;
         }
+
+
+        [HttpGet]
+        public ActionResult SearchLot(string search,int page=1)
+        {
+            var allLots = lotsRepository.Lots.Where(p => p.Name.Contains(search) && p.IsCompleted == false);
+            var count = allLots.Count();
+            var lots = allLots.OrderBy(p => p.LotID)
+                    .Skip((page - 1)*PageSize)
+                    .Take(PageSize);
+                    
+            LotsListViewModel model = new LotsListViewModel
+            {
+                Lots = lots,
+                PageModel = new PageModel
+                {
+                    CurrentPage = page,
+                    ItemsPerPage = PageSize,
+                    TotalItems = count
+                },
+                CurrentCategory = search
+            };
+            return View(model);
+        }
+            
 
         [HttpGet]
         public ActionResult Lot(int? lotId)
@@ -28,33 +54,7 @@ namespace Auction.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult SearchResult(string name, int page = 1)
-        {
-            var lots =
-                lotsRepository.Lots.Where(
-                    p =>
-                        p.Name == name
-                        )
-                    .OrderBy(p => p.LotID)
-                    .Skip((page - 1) * PageSize)
-                    .Take(PageSize);
-            LotsListViewModel model = new LotsListViewModel
-            {
-                Lots = lots,
-                PageModel = new PageModel
-                {
-                    CurrentPage = page,
-                    ItemsPerPage = PageSize,
-                    TotalItems = name == null ?
-                        lotsRepository.Lots.Count() :
-                        lots.Count()
-                },
-
-            };
-            return View(model);
-
-        }
+        
         [Authorize(Roles = "admin")]
         [Authorize(Roles = "moderator")]
         public ActionResult Remove(int lotId, string url)
@@ -108,7 +108,7 @@ namespace Auction.Controllers
             var cat = categoriesRepository.Categories.FirstOrDefault(x => x.CategoryName == categ);
             if (cat == null)
             {
-                ModelState.AddModelError("","Unknown category");
+                ModelState.AddModelError("",Resources.LotsControllerUnknownCategory);
                 return View(model);
             }
             lotsRepository.Edit(prod,cat);
@@ -125,7 +125,7 @@ namespace Auction.Controllers
                     var image = prod.Images[num];
                     return File(image.ImageData, image.ImageMimeType);
                 }
-                return File(System.IO.File.ReadAllBytes(HttpContext.Server.MapPath(Properties.Resources.DefaultImage)), Properties.Resources.DefaultImageType);
+                return File(System.IO.File.ReadAllBytes(HttpContext.Server.MapPath(Resources.DefaultImage)), Resources.DefaultImageType);
             }
             return null;
         }
@@ -133,6 +133,7 @@ namespace Auction.Controllers
         [HttpGet]
         public ViewResult List(string category, int page = 1)
         {
+            
             LotsListViewModel model = new LotsListViewModel
             {
                 Lots = lotsRepository.Lots.Where(p => (category == null || p.Category.CategoryName == category)&&p.IsCompleted==false ).OrderBy(p => p.LotID).Skip((page - 1) * PageSize).Take(PageSize),
@@ -141,8 +142,8 @@ namespace Auction.Controllers
                     CurrentPage = page,
                     ItemsPerPage = PageSize,
                     TotalItems = category == null ?
-                        lotsRepository.Lots.Count() :
-                        lotsRepository.Lots.Count(e => e.Category.CategoryName == category)
+                        lotsRepository.Lots.Count(x => x.IsCompleted == false) :
+                        lotsRepository.Lots.Count(x => x.Category.CategoryName == category && x.IsCompleted == false)
                 },
                 CurrentCategory = category
             };

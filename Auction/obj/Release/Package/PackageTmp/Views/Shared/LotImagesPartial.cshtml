@@ -1,0 +1,37 @@
+﻿@model Auction.Domain.Entities.Lot
+<section class="section-white">
+    <div class="container img-rounded">
+        <div id="carousel" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                @for (int i = 0; i < Model.Images.Count; i++)
+                {
+                    <li data-target="#carousel-example-generic" data-slide-to="@i" />
+                }
+            </ol>
+            <div class="carousel-inner">
+                <div class="item active" >
+                    <img style="margin: 0 auto" src="@Url.Action("GetImage","Lots",new {lotId = Model.LotID, num = 0})" alt="...">
+                </div>
+                <!-- Wrapper for slides -->
+                @for (int i = 1; i < Model.Images.Count; i++)
+                {
+                    <div class="item" >
+                        <img style="margin: 0 auto" src="@Url.Action("GetImage","Lots",new {lotId = Model.LotID, num = i})" alt="...">
+                    </div>
+                }
+            </div>
+
+
+
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+            <a class="right carousel-control" href="#carousel" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+        </div>
+
+    </div>
+</section>

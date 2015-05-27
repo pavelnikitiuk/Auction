@@ -13,7 +13,8 @@ namespace Auction
     {
         protected void Application_Start()
         {
-      //      Database.SetInitializer<ApplicationDbContext>(new AppDbInitializer());
+           //Database.SetInitializer<ApplicationDbContext>(null);
+           //Database.SetInitializer<ApplicationDbContext>(new AppDbInitializer());
 
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
@@ -21,10 +22,10 @@ namespace Auction
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             NinjectControllerFactory factory = new NinjectControllerFactory();
             ControllerBuilder.Current.SetControllerFactory(factory);
-
+            Database.SetInitializer<ApplicationDbContext>(new DropCreateDatabaseIfModelChanges<ApplicationDbContext>());
 
             ModelBinders.Binders.DefaultBinder = new XSSModelBinder();
-
+            
             JobScheduler.Start();
 
             //var timer = new System.Timers.Timer() { Interval = 60000 };

@@ -129,4 +129,25 @@
   <data name="BidControllerBidAmount" xml:space="preserve">
     <value>Minimal bid can be</value>
   </data>
+  <data name="UsernameErrorMessage" xml:space="preserve">
+    <value>Please enter your account name</value>
+  </data>
+  <data name="FirstNameErrorMessage" xml:space="preserve">
+    <value>Please enter your first name</value>
+  </data>
+  <data name="LastNameErrorMessage" xml:space="preserve">
+    <value>Please enter your last  name</value>
+  </data>
+  <data name="EmailErrorMessage" xml:space="preserve">
+    <value>Please enter your email name</value>
+  </data>
+  <data name="ComparePasswordsErrorMessage" xml:space="preserve">
+    <value>The new password and confirmation password do not match.</value>
+  </data>
+  <data name="BidControllerEnd" xml:space="preserve">
+    <value>Sorry auction is end</value>
+  </data>
+  <data name="LotsControllerUnknownCategory" xml:space="preserve">
+    <value>Unknown category</value>
+  </data>
 </root>

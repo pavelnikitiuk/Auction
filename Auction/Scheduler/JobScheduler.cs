@@ -16,15 +16,6 @@ namespace Auction.Scheduler
     {
         public static void Start()
         {
-
-            //// Create a new kernel and create the necessary bindings
-            //IKernel kernel = new StandardKernel();
-            //kernel.Bind<ILotsRepository>().To<LotRepository>();
-
-            //// Create a scheduler and give it the Ninject job factory created earlier
-            //IScheduler scheduler = new StdSchedulerFactory().GetScheduler();
-            //scheduler.JobFactory = kernel.Get<NinjectJobFactory>();
-
             IScheduler scheduler = StdSchedulerFactory.GetDefaultScheduler();
             scheduler.Start();
 

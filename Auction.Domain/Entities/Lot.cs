@@ -9,37 +9,26 @@ namespace Auction.Domain.Entities
 {
     public class Lot
     {
-        [ScaffoldColumn(false)]
         [Key]
         public int LotID { get; set; }
         [Required]
+        [MaxLength(100)]
         public string Name { get; set; }
-        [DataType(DataType.MultilineText)]
-        [Required]
         public string Description { get; set; }
         [Display(Name = "Start Price")]
         public decimal MinPrice { get; set; }
-        [ScaffoldColumn(false)]
         
 
-        [Display(Name = "End of Lot")]
-        [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:dd/MMM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
-        [EndTimeAtribute]
+        
         public DateTime EndTime { get; set; }
 
-        [ScaffoldColumn(false)]
-        public bool? IsCompleted { get; set; }
-        [ScaffoldColumn(false)]
-        public decimal? CurrentPrice { get; set; }
+        public bool IsCompleted { get; set; }
+        public decimal CurrentPrice { get; set; }
 
         
-        [HiddenInput(DisplayValue = false)]
 
         public virtual ICollection<Bid> Bids { get; set; }
-        [HiddenInput(DisplayValue = false)]
         public virtual List<Image> Images { get; set; }
-        [HiddenInput(DisplayValue = false)]
         public virtual Category Category { get; set; }
     }
 }

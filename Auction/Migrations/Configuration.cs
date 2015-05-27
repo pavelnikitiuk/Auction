@@ -5,14 +5,15 @@ namespace Auction.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Auction.Domain.DBase.AuctionDbContext >
+    internal sealed class Configuration : DbMigrationsConfiguration<Auction.Domain.DBase.AuctionDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+            ContextKey = "Auction.Domain.DBase.AuctionDbContext";
         }
 
-        protected override void Seed(Domain.DBase.AuctionDbContext context)
+        protected override void Seed(Auction.Domain.DBase.AuctionDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

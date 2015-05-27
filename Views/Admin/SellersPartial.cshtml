@@ -1,0 +1,11 @@
+﻿@model string
+
+@using (Html.BeginForm("AddSeller","Admin"))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.Hidden("userName",Model)
+        <label class="label">@Model</label>
+        <input type="submit" value="Make a sellor"/>
+    </div>
+}

@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("Styles", false)
+
+</head>
+<body style="background: linear-gradient(-13deg, #3B889D, #1A4A69);">
+
+    <nav class="navbar navbar-collapse">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Auction", "Index", "Home", null, new { @class = "navbar-brand" })
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                    <li>@Html.ActionLink("Sell", "Sell", "Seller").IsRole(User.IsInRole("seller"))</li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Auction Categories <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            @{Html.RenderAction("Menu", "Navigation");}
+                        </ul>
+                    </li>
+                </ul>
+
+                @using (Html.BeginForm("SearchLot", "Lots", FormMethod.Get))
+                {
+                    <form class="navbar-form navbar-left" role="search">
+
+                        @Html.TextBox("search")
+                        <div>
+                            <input type="submit" value="Search" />
+                        </div>
+
+                    </form>
+                }
+                <ul class="nav navbar-nav navbar-right">
+                    <li>@Html.Partial("_LoginPartial")</li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Auction</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("Scripts", false)
+</body>
+</html>
