@@ -9,7 +9,7 @@
     @RenderSection("Styles", false)
 
 </head>
-<body style="background: linear-gradient(-13deg, #3B889D, #1A4A69);">
+<body >
 
     <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -27,7 +27,8 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                    <li>@Html.ActionLink("About", "About", "Home") </li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home") </li>
                     <li>@Html.ActionLink("Sell", "Sell", "Seller").IsRole(User.IsInRole("seller"))</li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Auction Categories <span class="caret"></span></a>
@@ -52,7 +53,7 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-    <div class="container body-content">
+    <div class="container body-content ">
         @RenderBody()
         <hr />
         <footer>

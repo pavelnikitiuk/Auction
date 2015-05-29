@@ -66,11 +66,11 @@ namespace Auction.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Remove lot
         /// </summary>
-        /// <param name="lotId"></param>
-        /// <param name="url"></param>
-        /// <returns></returns>
+        /// <param name="lotId">Remove lot id</param>
+        /// <param name="url">Return url</param>
+        /// <returns>return to previous url</returns>
         [Authorize(Roles = "admin")]
         [Authorize(Roles = "moderator")]
         public ActionResult Remove(int lotId, string url)
@@ -86,6 +86,11 @@ namespace Auction.Controllers
                 return Redirect(url);
             return RedirectToAction("List", "Lots");
         }
+        /// <summary>
+        /// Edit get actio
+        /// </summary>
+        /// <param name="lotId">Lot id to edit</param>
+        /// <returns>View to edit lot</returns>
         [HttpGet]
         [Authorize(Roles = "admin")]
         [Authorize(Roles = "moderator")]
@@ -104,7 +109,12 @@ namespace Auction.Controllers
                 });
             return RedirectToAction("Index", "Home");
         }
-
+        /// <summary>
+        /// Edit post action
+        /// </summary>
+        /// <param name="model">Edit model</param>
+        /// <param name="categ">new category</param>
+        /// <returns>Edit Lot page</returns>
         [HttpPost]
         [Authorize(Roles = "admin")]
         [Authorize(Roles = "moderator")]
@@ -131,6 +141,12 @@ namespace Auction.Controllers
             return RedirectToAction("Lot", "Lots", new { lotId = model.LotID });
 
         }
+        /// <summary>
+        /// Get Image by Id
+        /// </summary>
+        /// <param name="lotId">Lot id</param>
+        /// <param name="num">number of images</param>
+        /// <returns>Lot image</returns>
         public FileContentResult GetImage(int lotId, int num)
         {
             Lot prod = lotsRepository.Lots.FirstOrDefault(p => p.LotID == lotId);
@@ -145,7 +161,12 @@ namespace Auction.Controllers
             }
             return null;
         }
-
+        /// <summary>
+        /// List of Lots
+        /// </summary>
+        /// <param name="category">Lot category</param>
+        /// <param name="page">Number of page</param>
+        /// <returns>List lot page</returns>
         [HttpGet]
         public ViewResult List(string category, int page = 1)
         {

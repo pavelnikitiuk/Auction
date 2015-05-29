@@ -1,25 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Auction.Domain.Abstract;
-using Auction.Domain.Entities;
-using Moq;
 using Ninject;
 using Auction.Domain.DBase;
-using Auction.Models;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Auction.Infrastructure
 {
     public class NinjectControllerFactory : DefaultControllerFactory
     {
-        public IKernel ninjectKernel { get; private set; }
+        private IKernel NinjectKernel { get; set; }
 
         public NinjectControllerFactory()
         {
-            ninjectKernel = new StandardKernel();
+            NinjectKernel = new StandardKernel();
             AddBindings();
         }
 
@@ -27,13 +21,13 @@ namespace Auction.Infrastructure
         {
             return controllerType == null
               ? null
-              : (IController)ninjectKernel.Get(controllerType);
+              : (IController)NinjectKernel.Get(controllerType);
         }
         private void AddBindings()
         {
-            ninjectKernel.Bind<ILotsRepository>().To<LotRepository>();
-            ninjectKernel.Bind<IBidsRepository>().To<BidRepository>();
-            ninjectKernel.Bind<ICategoriesRepository>().To<CategoryRepository>();
+            NinjectKernel.Bind<ILotsRepository>().To<LotRepository>();
+            NinjectKernel.Bind<IBidsRepository>().To<BidRepository>();
+            NinjectKernel.Bind<ICategoriesRepository>().To<CategoryRepository>();
 
         }
     }

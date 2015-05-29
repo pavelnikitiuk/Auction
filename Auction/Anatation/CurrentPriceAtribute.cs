@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using Auction.Domain.Abstract;
+﻿using System.ComponentModel.DataAnnotations;
 using Auction.Domain.Entities;
 
 namespace Auction.Anatation
@@ -14,7 +10,6 @@ namespace Auction.Anatation
         {
             var target = validationContext.ObjectType.GetProperty("Lot");
             var targetValue = (Lot)target.GetValue(validationContext.ObjectInstance, null);
-            decimal val;
             
             if (targetValue != null)
             {

@@ -7,6 +7,7 @@ using Auction.Domain.Abstract;
 using Auction.Domain.DBase;
 using Auction.Domain.Entities;
 using Auction.Models;
+using Auction.Properties;
 
 namespace Auction.Controllers
 {
@@ -14,7 +15,6 @@ namespace Auction.Controllers
     public class SellerController : Controller
     {
         private ILotsRepository lotsRepository;
-        // ReSharper disable once InconsistentNaming
         private ICategoriesRepository categoriesRepository;
 
         public SellerController(ILotsRepository lotsRepository, ICategoriesRepository categoriesRepository)
@@ -23,8 +23,10 @@ namespace Auction.Controllers
             this.lotsRepository = lotsRepository;
         }
 
-        //
-        // GET: /Seller/
+        /// <summary>
+        /// Sell get action
+        /// </summary>
+        /// <returns>Page to sell lot</returns>
         [HttpGet]
         public ViewResult Sell()
         {
@@ -36,6 +38,12 @@ namespace Auction.Controllers
                 Categories =  list
             });
         }
+        /// <summary>
+        /// Sell post action
+        /// </summary>
+        /// <param name="model">Model to sell</param>
+        /// <param name="categ">Lot category</param>
+        /// <returns>New lot page</returns>
         [HttpPost]
         public ActionResult Sell(SellModel model, string categ)
         {
@@ -45,6 +53,11 @@ namespace Auction.Controllers
                 var c = categoriesRepository.Categories.Select(x => x.CategoryName).OrderBy(x => x);
                 model.Categories = (from category in c select new SelectListItem { Text = category }).ToList();
                 
+                return View(model);
+            }
+            if (categ == null)
+            {
+                ModelState.AddModelError("",Resources.SellerControllerCategory);
                 return View(model);
             }
             Lot lot = new Lot

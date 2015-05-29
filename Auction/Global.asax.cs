@@ -27,7 +27,7 @@ namespace Auction
             ControllerBuilder.Current.SetControllerFactory(factory);
             Database.SetInitializer<ApplicationDbContext>(new DropCreateDatabaseIfModelChanges<ApplicationDbContext>());
 
-            ModelBinders.Binders.DefaultBinder = new XSSModelBinder();
+            ModelBinders.Binders.DefaultBinder = new ModelBinder.ModelBinder();
             
            // JobScheduler.Start();
 

@@ -36,8 +36,6 @@ namespace Auction.Controllers
         /// <returns>About page</returns>
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
         /// <summary>
@@ -46,7 +44,6 @@ namespace Auction.Controllers
         /// <returns>Contact page</returns>
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
 
             return View();
         }

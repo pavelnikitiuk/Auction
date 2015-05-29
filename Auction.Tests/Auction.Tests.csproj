@@ -91,6 +91,8 @@
     <Compile Include="Controllers\LotsControllerTest.cs" />
     <Compile Include="Controllers\NavigationControllerTest.cs" />
     <Compile Include="Controllers\SellerControllerTest.cs" />
+    <Compile Include="Controllers\BidControllerTest.cs" />
+    <Compile Include="Controllers\AdminControllerTest.cs" />
     <Compile Include="Helpers\PageLinksTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />

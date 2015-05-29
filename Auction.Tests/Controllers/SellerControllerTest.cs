@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -46,6 +47,18 @@ namespace Auction.Tests.Controllers
         public void Sell_Post_Validation_Erorr_Test()
         {
             //Arrange
+            SellModel q = new SellModel {Name = "P1", Files = new List<HttpPostedFileBase>()};
+            //Act
+            var context = new ValidationContext(q, null, null);
+            var results = new List<ValidationResult>();
+            //Assert
+            var isModelStateValid = Validator.TryValidateObject(q, context, results, true);
+            Assert.IsFalse(isModelStateValid);
+        }
+        [TestMethod]
+        public void Sell_ModelStateError_Test()
+        {
+            //Arrange
             Mock<ICategoriesRepository> category = new Mock<ICategoriesRepository>();
             category.Setup(m => m.Categories).Returns(new[]
             {
@@ -65,15 +78,50 @@ namespace Auction.Tests.Controllers
                     CategoryName = "Cat3",
                 }
             }.AsQueryable());
-            SellModel q =  new SellModel {Name = "P1"};
-            q.Files = new List<HttpPostedFileBase>();
-                //Act
-                SellerController target = new SellerController(null, category.Object);
-            var result1 = target.Sell(q, null);
-            //Assert
-            Assert.IsInstanceOfType(result1, typeof(RedirectToRouteResult));
-            RedirectToRouteResult routeResult1 = result1 as RedirectToRouteResult;
-            Assert.AreEqual(routeResult1.RouteValues["action"], "Lot");
+            SellerController controller = new SellerController(null, category.Object);
+            controller.ModelState.AddModelError("test", "test");
+            SellModel q = new SellModel { Name = "P1", Files = new List<HttpPostedFileBase>() };
+            //Act
+            ActionResult result = controller.Sell(q,"Cat3");
+
+            // Assert 
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            
+        }
+        [TestMethod]
+        public void Sell_ModelStateValid_Test()
+        {
+            // Arrange
+            Mock<ICategoriesRepository> category = new Mock<ICategoriesRepository>();
+            category.Setup(m => m.Categories).Returns(new[]
+            {
+                new Category
+                {
+                    CategoryId = 1,
+                    CategoryName = "Cat1",
+                },
+                new Category
+                {
+                    CategoryId = 1,
+                    CategoryName = "Cat2",
+                },
+                new Category
+                {
+                    CategoryId = 1,
+                    CategoryName = "Cat3",
+                }
+            }.AsQueryable());
+            SellerController controller = new SellerController(null, category.Object);
+            controller.ModelState.Clear();
+            SellModel q = new SellModel { Name = "P1", Files = new List<HttpPostedFileBase>(),Description = "1"};
+            //Act
+            ActionResult result = controller.Sell(q, "Cat3");
+
+            // Assert 
+            Assert.IsInstanceOfType(result, typeof(RedirectToRouteResult));
+            RedirectToRouteResult routeResult = result as RedirectToRouteResult;
+            Assert.AreEqual(routeResult.RouteValues["action"], "Lot");
+
         }
     }
 }

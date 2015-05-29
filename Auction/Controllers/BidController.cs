@@ -24,7 +24,6 @@ namespace Auction.Controllers
         /// <returns>ActionResult of new Bid</returns>
         [HttpPost]
         [AjaxAuthorize]
-        [ValidateAntiForgeryToken]
         public ActionResult Add(LotModel model)
         {
             Lot lot = lotsRepository.Lots.FirstOrDefault(p => p.LotID == model.Lot.LotID);

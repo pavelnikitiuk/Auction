@@ -1,6 +1,7 @@
 ﻿body {
     padding-bottom: 20px;
-    color:#ffffff
+    color: #ffffff;
+    background: linear-gradient(-13deg, #3B889D, #1A4A69)
 }
 li.list-group-item {
     color: black;

@@ -50,6 +50,7 @@
                 </div>
                 <div class="caption">
                     <h4 class="pull-right">$@Model[0].CurrentPrice</h4>
+                    <br/>
                     <h4>
                         <a href="@Url.Action("Lot","Lots",new {lotId = Model[0].LotID})">@Model[0].Name</a>
                     </h4>
@@ -64,6 +65,7 @@
                             <img src="@Url.Action("GetImage", "Lots", new {lotId = Model[i].LotID, num = 0})" alt="">
                             <div class="caption">
                                 <h4 class="pull-right">$@Model[i].CurrentPrice</h4>
+                                <br/>
                                 <h4>
                                     <a href="@Url.Action("Lot", "Lots", new {lotId = Model[i].LotID})">@Model[i].Name</a>
                                 </h4>

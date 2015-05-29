@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Auction.Domain.Abstract;
 
@@ -14,7 +12,10 @@ namespace Auction.Controllers
         {
             this.categoriesRepository = categoriesRepository;
         }
-
+        /// <summary>
+        /// Naviagation menu
+        /// </summary>
+        /// <returns>Partial view to navigation</returns>
         public PartialViewResult Menu()
         {
             IEnumerable<string> categories =

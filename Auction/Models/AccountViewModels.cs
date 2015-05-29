@@ -3,6 +3,7 @@ using Auction.Properties;
 
 namespace Auction.Models
 {
+    
     public class ExternalLoginConfirmationViewModel
     {
         [Required(ErrorMessageResourceType = typeof (Resources), ErrorMessageResourceName = "UsernameErrorMessage")]

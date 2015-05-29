@@ -153,4 +153,7 @@
   <data name="AccountControllerInvalidUsername" xml:space="preserve">
     <value>Invalid username or password.</value>
   </data>
+  <data name="SellerControllerCategory" xml:space="preserve">
+    <value>Chose Category</value>
+  </data>
 </root>

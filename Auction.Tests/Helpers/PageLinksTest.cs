@@ -10,7 +10,7 @@ namespace Auction.Tests.Helpers
     public class PageLinksTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestMethod()
         {
             // Arrange
             HtmlHelper myHelper = null;

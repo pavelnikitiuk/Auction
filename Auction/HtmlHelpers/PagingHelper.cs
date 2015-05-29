@@ -7,6 +7,13 @@ namespace Auction.HtmlHelpers
 {
     public static class PagingHelper
     {
+        /// <summary>
+        /// Create page links
+        /// </summary>
+        /// <param name="html">HtmlHelper</param>
+        /// <param name="pageModel">Model of page</param>
+        /// <param name="pageUrl">links Url</param>
+        /// <returns>Page links</returns>
         public static MvcHtmlString PageLinks(this HtmlHelper html, PageModel pageModel, Func<int, string> pageUrl)
         {
             StringBuilder result = new StringBuilder();
@@ -19,7 +26,7 @@ namespace Auction.HtmlHelpers
                 if(i == pageModel.CurrentPage)
                     li.AddCssClass("active");
                 li.InnerHtml = tag.ToString();
-                result.Append(li.ToString());
+                result.Append(li);
             }
             return MvcHtmlString.Create(result.ToString());
         }

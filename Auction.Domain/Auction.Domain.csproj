@@ -80,7 +80,6 @@
     <Compile Include="Abstract\IBidsRepository.cs" />
     <Compile Include="Abstract\ICategoriesRepository.cs" />
     <Compile Include="Abstract\ILotsRepository.cs" />
-    <Compile Include="Atributes\EndTimeAtribute.cs" />
     <Compile Include="DBase\AuctionDbContext.cs" />
     <Compile Include="DBase\BidRepository.cs" />
     <Compile Include="DBase\CategoryRepository.cs" />
@@ -93,56 +92,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="Content\bootstrap\alerts.less" />
-    <None Include="Content\bootstrap\badges.less" />
-    <None Include="Content\bootstrap\bootstrap.less" />
-    <None Include="Content\bootstrap\breadcrumbs.less" />
-    <None Include="Content\bootstrap\button-groups.less" />
-    <None Include="Content\bootstrap\buttons.less" />
-    <None Include="Content\bootstrap\carousel.less" />
-    <None Include="Content\bootstrap\close.less" />
-    <None Include="Content\bootstrap\code.less" />
-    <None Include="Content\bootstrap\component-animations.less" />
-    <None Include="Content\bootstrap\dropdowns.less" />
-    <None Include="Content\bootstrap\forms.less" />
-    <None Include="Content\bootstrap\glyphicons.less" />
-    <None Include="Content\bootstrap\grid.less" />
-    <None Include="Content\bootstrap\input-groups.less" />
-    <None Include="Content\bootstrap\jumbotron.less" />
-    <None Include="Content\bootstrap\labels.less" />
-    <None Include="Content\bootstrap\list-group.less" />
-    <None Include="Content\bootstrap\media.less" />
-    <None Include="Content\bootstrap\mixins.less" />
-    <None Include="Content\bootstrap\modals.less" />
-    <None Include="Content\bootstrap\navbar.less" />
-    <None Include="Content\bootstrap\navs.less" />
-    <None Include="Content\bootstrap\normalize.less" />
-    <None Include="Content\bootstrap\pager.less" />
-    <None Include="Content\bootstrap\pagination.less" />
-    <None Include="Content\bootstrap\panels.less" />
-    <None Include="Content\bootstrap\popovers.less" />
-    <None Include="Content\bootstrap\print.less" />
-    <None Include="Content\bootstrap\progress-bars.less" />
-    <None Include="Content\bootstrap\responsive-utilities.less" />
-    <None Include="Content\bootstrap\scaffolding.less" />
-    <None Include="Content\bootstrap\tables.less" />
-    <None Include="Content\bootstrap\theme.less" />
-    <None Include="Content\bootstrap\thumbnails.less" />
-    <None Include="Content\bootstrap\tooltip.less" />
-    <None Include="Content\bootstrap\type.less" />
-    <None Include="Content\bootstrap\utilities.less" />
-    <None Include="Content\bootstrap\variables.less" />
-    <None Include="Content\bootstrap\wells.less" />
-    <None Include="Content\fonts\glyphicons-halflings-regular.eot" />
-    <None Include="Content\fonts\glyphicons-halflings-regular.ttf" />
-    <None Include="Content\fonts\glyphicons-halflings-regular.woff" />
-    <None Include="Content\less\bootstrap-datetimepicker-build.less" />
-    <None Include="Content\less\_bootstrap-datetimepicker.less" />
-    <None Include="packages.config" />
+    <Folder Include="Atributes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

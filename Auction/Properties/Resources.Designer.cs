@@ -160,6 +160,15 @@ namespace Auction.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chose Category.
+        /// </summary>
+        internal static string SellerControllerCategory {
+            get {
+                return ResourceManager.GetString("SellerControllerCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please enter your account name.
         /// </summary>
         internal static string UsernameErrorMessage {

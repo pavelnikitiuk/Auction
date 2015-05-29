@@ -1,7 +1,8 @@
 ﻿@using Auction.Models
+@using Action = Antlr.Runtime.Misc.Action
 @model LotsListViewModel
 @{
-    ViewBag.Title = "List";
+    ViewBag.Title = @Model.CurrentCategory??"All";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 

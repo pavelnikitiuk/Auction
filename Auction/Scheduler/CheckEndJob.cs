@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.Validation;
 using System.Linq;
-using System.Net;
 using System.Net.Mail;
-using System.Web;
-using Auction.Domain.Abstract;
 using Auction.Domain.DBase;
 using Auction.Models;
 using Microsoft.AspNet.Identity;
@@ -19,6 +14,10 @@ namespace Auction.Scheduler
         private bool disposed;
         private UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
         private AuctionDbContext context = new AuctionDbContext();
+        /// <summary>
+        /// Execute job
+        /// </summary>
+        /// <param name="con"></param>
         public void Execute(IJobExecutionContext con)
         {
             var lots = context.Lots.Where(x => x.EndTime <= DateTime.Now && x.IsCompleted == false);
