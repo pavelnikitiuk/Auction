@@ -150,4 +150,7 @@
   <data name="LotsControllerUnknownCategory" xml:space="preserve">
     <value>Unknown category</value>
   </data>
+  <data name="AccountControllerInvalidUsername" xml:space="preserve">
+    <value>Invalid username or password.</value>
+  </data>
 </root>

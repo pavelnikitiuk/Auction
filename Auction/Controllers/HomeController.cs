@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Auction.Domain.Abstract;
 using Auction.Domain.Entities;
-using Auction.Models;
 
 namespace Auction.Controllers
 {
@@ -19,7 +16,10 @@ namespace Auction.Controllers
         {
             this.repository = repository;
         }
-
+        /// <summary>
+        /// Application main page
+        /// </summary>
+        /// <returns>Main page</returns>
         [HttpGet]
         public ActionResult Index()
         {
@@ -30,14 +30,20 @@ namespace Auction.Controllers
                 return View(models);
             return RedirectToAction("About","Home");
         }
-
+        /// <summary>
+        /// About action
+        /// </summary>
+        /// <returns>About page</returns>
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
 
             return View();
         }
-
+        /// <summary>
+        /// Contact action
+        /// </summary>
+        /// <returns>Contact page</returns>
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

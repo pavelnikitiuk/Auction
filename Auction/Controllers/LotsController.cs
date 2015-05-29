@@ -11,17 +11,24 @@ namespace Auction.Controllers
     {
         private ILotsRepository lotsRepository;
         private ICategoriesRepository categoriesRepository;
-        private const int PageSize = 10;
+        public int PageSize = 10;
         public LotsController(ILotsRepository lotsRepository, ICategoriesRepository categoriesRepository)
         {
             this.lotsRepository = lotsRepository;
             this.categoriesRepository = categoriesRepository;
         }
 
-
+        /// <summary>
+        /// Search lot
+        /// </summary>
+        /// <param name="search">Name of lot</param>
+        /// <param name="page">Current page</param>
+        /// <returns>ViewResult of finding lot</returns>
         [HttpGet]
-        public ActionResult SearchLot(string search,int page=1)
+        public ActionResult SearchLot(string search, int page = 1)
         {
+            if (!ModelState.IsValid)
+                return RedirectToAction("List", "Lots");
             var allLots = lotsRepository.Lots.Where(p => p.Name.Contains(search) && p.IsCompleted == false);
             var count = allLots.Count();
             var lots = allLots.OrderBy(p => p.LotID)
@@ -42,7 +49,11 @@ namespace Auction.Controllers
             return View(model);
         }
             
-
+        /// <summary>
+        /// Lot page
+        /// </summary>
+        /// <param name="lotId">Lot Id</param>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Lot(int? lotId)
         {
@@ -51,10 +62,15 @@ namespace Auction.Controllers
             var lot = lotsRepository.Lots.FirstOrDefault(x => x.LotID == lotId);
             if (lot != null) 
                 return View(lot);
-            return View();
+            return RedirectToAction("List");
         }
 
-        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="lotId"></param>
+        /// <param name="url"></param>
+        /// <returns></returns>
         [Authorize(Roles = "admin")]
         [Authorize(Roles = "moderator")]
         public ActionResult Remove(int lotId, string url)

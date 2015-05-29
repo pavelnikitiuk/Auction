@@ -17,16 +17,19 @@ namespace Auction.Controllers
         {
             this.lotsRepository = lotsRepository;
         }
+        /// <summary>
+        /// Add new Bid
+        /// </summary>
+        /// <param name="model">Lot View model</param>
+        /// <returns>ActionResult of new Bid</returns>
         [HttpPost]
         [AjaxAuthorize]
+        [ValidateAntiForgeryToken]
         public ActionResult Add(LotModel model)
         {
-            //var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key, x.Value.Errors }).ToArray();
             Lot lot = lotsRepository.Lots.FirstOrDefault(p => p.LotID == model.Lot.LotID);
             if (lot != null)
             {
-
-
                 if (ModelState.IsValid)
                 {
                     if (DateTime.Now >= lot.EndTime)

@@ -1,7 +1,10 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Auction.Controllers;
 using Auction.Infrastructure;
 using Auction.ModelBinder;
 using Auction.Models;
@@ -26,7 +29,7 @@ namespace Auction
 
             ModelBinders.Binders.DefaultBinder = new XSSModelBinder();
             
-            JobScheduler.Start();
+           // JobScheduler.Start();
 
             //var timer = new System.Timers.Timer() { Interval = 60000 };
             //timer.Elapsed += (sender, args) => Workflow.LotEndChecker.SearchEndedLots();

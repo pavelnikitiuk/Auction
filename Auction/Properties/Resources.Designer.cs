@@ -61,6 +61,15 @@ namespace Auction.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid username or password..
+        /// </summary>
+        internal static string AccountControllerInvalidUsername {
+            get {
+                return ResourceManager.GetString("AccountControllerInvalidUsername", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Minimal bid can be.
         /// </summary>
         internal static string BidControllerBidAmount {

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -9,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using Auction.Models;
+using Auction.Properties;
 
 namespace Auction.Controllers
 {
@@ -27,8 +26,11 @@ namespace Auction.Controllers
 
         public UserManager<ApplicationUser> UserManager { get; private set; }
 
-        //
-        // GET: /Account/Login
+        /// <summary>
+        /// Login get action
+        /// </summary>
+        /// <param name="returnUrl">Url to return</param>
+        /// <returns>Login page</returns>
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -36,8 +38,12 @@ namespace Auction.Controllers
             return View();
         }
 
-        //
-        // POST: /Account/Login
+        /// <summary>
+        /// Login post action
+        /// </summary>
+        /// <param name="model">LoginView model</param>
+        /// <param name="returnUrl">Url to return</param>
+        /// <returns>Return to url or validation error</returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -51,25 +57,27 @@ namespace Auction.Controllers
                     await SignInAsync(user, model.RememberMe);
                     return RedirectToLocal(returnUrl);
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Invalid username or password.");
-                }
+                    ModelState.AddModelError("", Resources.AccountControllerInvalidUsername);
             }
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-
-        //
-        // GET: /Account/Register
+        /// <summary>
+        /// Register get action
+        /// </summary>
+        /// <returns>Register view</returns>
+        [HttpGet]
         [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
         }
 
-        //
-        // POST: /Account/Register
+        /// <summary>
+        /// Register post action
+        /// </summary>
+        /// <param name="model">RegisterView model</param>
+        /// <returns>Register user or validation error</returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -94,12 +102,10 @@ namespace Auction.Controllers
                 AddErrors(result);
             }
 
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
 
-        //
-        // POST: /Account/Disassociate
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Disassociate(string loginProvider, string providerKey)

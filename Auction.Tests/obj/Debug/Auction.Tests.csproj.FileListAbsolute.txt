@@ -59,3 +59,7 @@ D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction.Tests\bin\Debug\C
 D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction.Tests\bin\Debug\Common.Logging.Core.xml
 D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction.Tests\bin\Debug\Common.Logging.pdb
 D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction.Tests\bin\Debug\Common.Logging.xml
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction.Tests\bin\Debug\Moq.dll
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction.Tests\bin\Debug\Moq.xml
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction.Tests\bin\Debug\Microsoft.WindowsAzure.Storage.dll
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction.Tests\bin\Debug\Microsoft.WindowsAzure.Storage.xml

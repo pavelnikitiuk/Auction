@@ -17,7 +17,10 @@ namespace Auction.Controllers
             this.context = context;
             this.categoriesRepository = categoriesRepository;
         }
-        
+        /// <summary>
+        /// ManageUserRoles action
+        /// </summary>
+        /// <returns>ManageUserRole view</returns>
         [HttpGet]
         [Authorize(Roles = "admin")]
         public ActionResult ManageUserRoles()
@@ -25,12 +28,20 @@ namespace Auction.Controllers
             var list = context.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
             return View(list);
         }
+
+        /// <summary>
+        /// Add role to user
+        /// </summary>
+        /// <param name="userName">Username</param>
+        /// <param name="roleName">Role to add</param>
+        /// <returns>JsonResult</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "admin")]
         public JsonResult RoleAddToUser(string userName, string roleName)
         {
-            var list = context.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
+            if (!ModelState.IsValid)
+                return Json("Illegal operation");
             ApplicationUser user = context.Users.FirstOrDefault(u => u.UserName.Equals(userName, StringComparison.CurrentCultureIgnoreCase));
             var account = new AccountController();
             if (user == null)
@@ -43,12 +54,17 @@ namespace Auction.Controllers
             }
             return Json(String.Format("The user {0} has been successfully added to the right {1}",user.UserName,roleName));
         }
-
+        /// <summary>
+        /// Get user rolers
+        /// </summary>
+        /// <param name="userName">Username</param>
+        /// <returns>User roles</returns>
         [HttpGet]
         [Authorize(Roles = "admin")]
         public JsonResult GetRoles(string userName)
         {
-            RolesModel model = new RolesModel();
+            if (!ModelState.IsValid)
+                return Json("Illegal operation");
             if (string.IsNullOrWhiteSpace(userName))
                 return Json("Type something", JsonRequestBehavior.AllowGet);
 
@@ -61,12 +77,19 @@ namespace Auction.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
 
         }
-
+        /// <summary>
+        /// Delete user role
+        /// </summary>
+        /// <param name="userName">Username</param>
+        /// <param name="roleName">Role to delete</param>
+        /// <returns>Json result</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "admin")]
         public JsonResult DeleteRoleForUser(string userName, string roleName)
         {
+            if (!ModelState.IsValid)
+                return Json("Illegal operation");
             var account = new AccountController();
             ApplicationUser user = context.Users.FirstOrDefault(u => u.UserName.Equals(userName, StringComparison.CurrentCultureIgnoreCase));
             if (user == null)
@@ -80,12 +103,14 @@ namespace Auction.Controllers
                     context.SaveChanges();
                 }
             }
-            var list = context.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
 
             return Json(String.Format("The user {0} has the right successfully removed {1}",userName,roleName));
         }
 
-
+        /// <summary>
+        /// Moderator control action
+        /// </summary>
+        /// <returns>Moderator control page</returns>
         [HttpGet]
         [Authorize(Roles = "admin")]
         [Authorize(Roles = "moderator")]
@@ -93,38 +118,60 @@ namespace Auction.Controllers
         {
             var list = categoriesRepository.Categories.Select(x => x.CategoryName).OrderBy(x => x);
             var users = context.Users.Where(x => x.IsSeller == false).Select(x=>x.UserName);
-            return View(new ModeratorModel{
-               Categories = list,
-               Users = users
-        });
+            return View(new ModeratorModel
+            {
+                Categories = list,
+                Users = users
+            });
         }
+        /// <summary>
+        /// Create new category
+        /// </summary>
+        /// <param name="newCategory">Name of new category</param>
+        /// <returns>Partial view</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "admin")]
         [Authorize(Roles = "moderator")]
         public PartialViewResult AddCategory(string newCategory)
         {
+            if (!ModelState.IsValid)
+                return PartialView("CategoriesPartial", categoriesRepository.Categories.Select(x => x.CategoryName).OrderBy(x => x));
             if(newCategory!=null)
                 categoriesRepository.Add(newCategory);
             return PartialView("CategoriesPartial", categoriesRepository.Categories.Select(x => x.CategoryName).OrderBy(x => x));
         }
+        /// <summary>
+        /// Remove category
+        /// </summary>
+        /// <param name="removeCategory">Name of remove category</param>
+        /// <returns>PartialView</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "admin")]
         [Authorize(Roles = "moderator")]
         public PartialViewResult RemoveCategory(string removeCategory)
         {
+            if (!ModelState.IsValid)
+                return PartialView("CategoriesPartial", categoriesRepository.Categories.Select(x => x.CategoryName).OrderBy(x => x));
             var cat = categoriesRepository.Categories.FirstOrDefault(x => x.CategoryName == removeCategory);
             if (cat != null)
                 categoriesRepository.Remove(cat);
             return PartialView("CategoriesPartial", categoriesRepository.Categories.Select(x => x.CategoryName).OrderBy(x => x));
         }
+        /// <summary>
+        /// Add role seller to user
+        /// </summary>
+        /// <param name="userName">username</param>
+        /// <returns>ModeraorControl page</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "admin")]
         [Authorize(Roles = "moderator")]
         public ActionResult AddSeller(string userName)
         {
+            if (!ModelState.IsValid)
+                return RedirectToAction("ModeraotorControl");
             ApplicationUser user = context.Users.FirstOrDefault(u => u.UserName.Equals(userName, StringComparison.CurrentCultureIgnoreCase));
             var account = new AccountController();
             if (user != null)

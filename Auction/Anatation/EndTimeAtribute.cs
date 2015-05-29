@@ -9,12 +9,12 @@ namespace Auction.Anatation
 {
     public class EndTimeAtribute : ValidationAttribute
     {
-        
+
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            
-            if ((DateTime) value >= DateTime.Now.AddHours(1))
-                return ValidationResult.Success;
+            if (value != null)
+                if ((DateTime)value >= DateTime.Now.AddHours(1))
+                    return ValidationResult.Success;
             return new ValidationResult("The minimum time of the auction shall be one hour");
         }
     }

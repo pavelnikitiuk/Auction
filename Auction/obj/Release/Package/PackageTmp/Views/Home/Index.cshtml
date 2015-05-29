@@ -61,16 +61,16 @@
                 {
                     <div class="col-sm-4 col-lg-4 col-md-4">
                         <div class="thumbnail">
-                            <img src="@Url.Action("GetImage", "Lots", new { lotId = Model[i].LotID, num = 0 })" alt="">
-                        <div class="caption">
-                            <h4 class="pull-right">$@Model[i].CurrentPrice</h4>
-                            <h4>
-                                <a href="@Url.Action("Lot","Lots",new {lotId = Model[i].LotID})">@Model[i].Name</a>
-                            </h4>
+                            <img src="@Url.Action("GetImage", "Lots", new {lotId = Model[i].LotID, num = 0})" alt="">
+                            <div class="caption">
+                                <h4 class="pull-right">$@Model[i].CurrentPrice</h4>
+                                <h4>
+                                    <a href="@Url.Action("Lot", "Lots", new {lotId = Model[i].LotID})">@Model[i].Name</a>
+                                </h4>
+                            </div>
+
                         </div>
-                        
                     </div>
-                </div>
                 }
 
 
