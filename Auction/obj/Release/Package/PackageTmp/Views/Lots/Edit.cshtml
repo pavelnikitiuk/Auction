@@ -20,7 +20,7 @@
 {
     @Html.ValidationSummary()
     @Html.AntiForgeryToken()
-    @Html.HiddenFor(x=>x.LotID)
+    @Html.HiddenFor(x => x.LotID)
     <div class="form-group">
         @Html.LabelFor(x => x.Name)
         @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
@@ -29,12 +29,12 @@
         @Html.LabelFor(x => x.Description)
         @Html.TextAreaFor(x => x.Description, new { @class = "form-control" })
     </div>
-    
-    List<SelectListItem> list = (from category in Model.Categories select new SelectListItem { Text = category }).ToList();
+
+    List<SelectListItem> list = (from category in Model.Categories select new SelectListItem { Text = category.Name, Value = category.Id.ToString() }).ToList();
 
     <div class="form-group">
         <label>Category</label>
-        @Html.DropDownList("categ", list, new { @class = "form-control" })
+        @Html.DropDownList("categId", list, new { @class = "form-control" })
 
     </div>
     <input type="submit" class="btn btn-success" />

@@ -67,7 +67,7 @@
     
     <div class="form-group">
         <label>Category</label>
-        @Html.DropDownList("categ", Model.Categories, new { @class = "form-control" })
+        @Html.DropDownList("categ", Model.Categories.Select(x=>new SelectListItem{Text = x.Name, Value = x.Id.ToString()}), new { @class = "form-control" })
 
     </div>
     <div class="form-group">

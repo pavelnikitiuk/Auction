@@ -11,7 +11,7 @@
 
 }
 
-<h2>@Model.CurrentCategory</h2>
+<h2>@Model.CurrentCategoryName</h2>
 @{ int i = 1; }
 <div class="container img-rounded" style="background-color: white; margin-top: 20px; color: black">
     @foreach (var l in Model.Lots)
@@ -23,6 +23,6 @@
 </div>
 <ul class="pagination">
 
-    @Html.PageLinks(Model.PageModel, x => Url.Action("SearchLot", new { page = x, search = Model.CurrentCategory }))
+    @Html.PageLinks(Model.PageModel, x => Url.Action("SearchLot", new { page = x, search = Model.CurrentCategoryName }))
 </ul>
 

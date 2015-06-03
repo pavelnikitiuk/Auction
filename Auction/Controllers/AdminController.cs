@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Auction.Domain.Abstract;
@@ -45,18 +44,18 @@ namespace Auction.Controllers
         /// <summary>
         /// Add role to user
         /// </summary>
-        /// <param name="userName">Username</param>
-        /// <param name="roleName">Role to add</param>
+        /// <param name="userId">Username</param>
+        /// <param name="roleId">Role to add</param>
         /// <returns>JsonResult</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "admin")]
-        public JsonResult RoleAddToUser(string userName, string roleName)
+        public JsonResult RoleAddToUser(string userId, string roleId)
         {
             if (!ModelState.IsValid)
                 return Json("Illegal operation");
-            ApplicationUser user = context.Users.Find(userName);
-            IdentityRole role = context.Roles.Find(roleName);
+            ApplicationUser user = context.Users.Find(userId);
+            IdentityRole role = context.Roles.Find(roleId);
             if (user==null || role == null)
                 return Json("Unknown user or role");
             var account = new AccountController();
@@ -71,17 +70,17 @@ namespace Auction.Controllers
         /// <summary>
         /// Get user rolers
         /// </summary>
-        /// <param name="userName">Username</param>
+        /// <param name="userId">Username</param>
         /// <returns>User roles</returns>
         [HttpGet]
         [Authorize(Roles = "admin")]
-        public JsonResult GetRoles(string userName)
+        public JsonResult GetRoles(string userId)
         {
             if (!ModelState.IsValid)
                 return Json("Illegal operation");
-            if (string.IsNullOrWhiteSpace(userName))
+            if (string.IsNullOrWhiteSpace(userId))
                 return Json("Type something", JsonRequestBehavior.AllowGet);
-            ApplicationUser user = context.Users.Find(userName);
+            ApplicationUser user = context.Users.Find(userId);
             if (user == null)
                return Json("Unknown user", JsonRequestBehavior.AllowGet);
             var account = new AccountController();
@@ -92,19 +91,19 @@ namespace Auction.Controllers
         /// <summary>
         /// Delete user role
         /// </summary>
-        /// <param name="userName">Username</param>
-        /// <param name="roleName">Role to delete</param>
+        /// <param name="userId">Username</param>
+        /// <param name="roleId">Role to delete</param>
         /// <returns>Json result</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "admin")]
-        public JsonResult DeleteRoleForUser(string userName, string roleName)
+        public JsonResult DeleteRoleForUser(string userId, string roleId)
         {
             if (!ModelState.IsValid)
                 return Json("Illegal operation");
             var account = new AccountController();
-            ApplicationUser user = context.Users.Find(userName);
-            IdentityRole role = context.Roles.Find(roleName);
+            ApplicationUser user = context.Users.Find(userId);
+            IdentityRole role = context.Roles.Find(roleId);
             if (user == null)
                 return Json("Unknown User");
             if (account.UserManager.IsInRole(user.Id, role.Name))

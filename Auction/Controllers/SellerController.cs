@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Auction.Domain.Abstract;
-using Auction.Domain.DBase;
 using Auction.Domain.Entities;
 using Auction.Models;
 using Auction.Properties;
@@ -30,8 +28,6 @@ namespace Auction.Controllers
         [HttpGet]
         public ViewResult Sell()
         {
-            var cat = categoriesRepository.Categories.Select(x => x.CategoryName).OrderBy(x => x);
-            IEnumerable<SelectListItem> list = cat.Select(x => new SelectListItem { Text = x });
             return View(new SellModel
             {
                 MinPrice = 1,

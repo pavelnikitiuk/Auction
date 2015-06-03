@@ -1,11 +1,11 @@
-﻿@model string
+﻿@model Auction.Models.UsersModel
 
 @using (Html.BeginForm("AddSeller","Admin"))
 {
     @Html.AntiForgeryToken()
     <div class="form-group">
-        @Html.Hidden("userName",Model)
-        <label class="label">@Model</label>
+        @Html.Hidden("userId",Model.UserId)
+        <label class="label">@Model.Username</label>
         <input type="submit" value="Make a sellor"/>
     </div>
 }
