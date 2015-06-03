@@ -13,6 +13,13 @@ namespace Auction.Models
         [DataType(DataType.MultilineText)]
         [Required]
         public string Description { get; set; }
-        public IEnumerable<string> Categories { get; set; }
+
+        public List<Categories> Categories { get; set; }
+    }
+
+    public class Categories
+    {
+        public string Name { get; set; }
+        public int Id { get; set; }
     }
 }

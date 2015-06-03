@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using Auction.Domain.Abstract;
+using Auction.Models;
 
 namespace Auction.Controllers
 {
@@ -18,8 +19,9 @@ namespace Auction.Controllers
         /// <returns>Partial view to navigation</returns>
         public PartialViewResult Menu()
         {
-            IEnumerable<string> categories =
-                categoriesRepository.Categories.Select(x => x.CategoryName).OrderBy(x => x);
+            var categories =
+                categoriesRepository.Categories.Select(x =>new MenuModel{CategoryId = x.CategoryId, CategoryName = x.CategoryName}).OrderBy(x => x);
+
             return PartialView(categories);
 
         }

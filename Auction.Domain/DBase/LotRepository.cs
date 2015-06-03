@@ -5,79 +5,51 @@ using Auction.Domain.Entities;
 
 namespace Auction.Domain.DBase
 {
-    public class LotRepository : ILotsRepository, IDisposable
+    public class LotRepository : BaseRepository, ILotsRepository
     {
-        private bool disposed = false;
-        private readonly AuctionDbContext context = new AuctionDbContext();
+        
         public void Remove(Lot lot)
         {
-            Lot dbEntry = context.Lots.Find(lot.LotID);
-            if (dbEntry != null)
+            Lot entryLotInDb = Context.Lots.Find(lot.LotID);
+            if (entryLotInDb != null)
             {
-                context.Images.RemoveRange(dbEntry.Images);
-                context.Lots.Remove(dbEntry);
-                context.SaveChanges();
+                Context.Lots.Remove(entryLotInDb);
+                Context.SaveChanges();
             }
         }
 
         public void AddBid(Lot lot, decimal bidAmount, string userId)
         {
-            var db = context.Lots.Find(lot.LotID);
-            if (db == null)
+            var entryLotInDb = Context.Lots.Find(lot.LotID);
+            if (entryLotInDb == null)
                 return;
-            db.Bids.Add(new Bid() { BidAmount = bidAmount, DatePlaced = DateTime.Now, Lot = lot, UserId = userId });
-            db.CurrentPrice = bidAmount;
-            context.SaveChanges();
+            entryLotInDb.Bids.Add(new Bid { BidAmount = bidAmount, DatePlaced = DateTime.Now, Lot = lot, UserId = userId });
+            entryLotInDb.CurrentPrice = bidAmount;
+            Context.SaveChanges();
         }
 
         public void Edit(Lot lot, Category category)
         {
-            var dbLot = context.Lots.Find(lot.LotID);
-            if (dbLot == null)
+            var entryLotInDb = Context.Lots.Find(lot.LotID);
+            if (entryLotInDb == null)
                 return;
-            var dbCategory = context.Categoryes.Find(category.CategoryId);
+            var dbCategory = Context.Categoryes.Find(category.CategoryId);
             if (dbCategory == null)
                 return;
-            dbLot.Category.Lots.Remove(dbLot);
+            entryLotInDb.Category.Lots.Remove(entryLotInDb);
             dbCategory.Lots.Add(lot);
-            context.SaveChanges();
+            Context.SaveChanges();
         }
-        public void Save(Lot lot)
+        public void Add(Lot lot)
         {
-            if (lot.LotID == 0)
-            {
-                context.Lots.Add(lot);
-            }
-            else
-            {
-                Lot db = context.Lots.Find(lot.LotID);
-                if (db != null)
-                    db.Bids.Add(new Bid { BidAmount = 10, DatePlaced = DateTime.Now, Lot = lot });
-            }
-            context.SaveChanges();
+            var addCategory = Context.Categoryes.Find(lot.Category.CategoryId);
+            lot.Category = addCategory;
+            Context.Lots.Add(lot);
+            Context.SaveChanges();
         }
         public IQueryable<Lot> Lots
         {
-            get { return context.Lots; }
-        }
-           public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if(disposed)
-                return;
-            if (disposing)
-                context.Dispose();
-            disposed = true;
-        }
-
-        ~LotRepository()
-        {
-            Dispose(false);
+            get { return Context.Lots; }
         }
     }
 }

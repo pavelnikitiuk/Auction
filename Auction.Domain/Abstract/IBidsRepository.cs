@@ -7,6 +7,5 @@ namespace Auction.Domain.Abstract
     public interface IBidsRepository
     {
        IQueryable<Bid> Bids { get;}
-        void Save();
     }
 }

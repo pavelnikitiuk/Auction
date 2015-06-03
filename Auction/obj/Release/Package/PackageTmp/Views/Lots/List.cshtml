@@ -23,7 +23,7 @@
 </div>
 <ul class="pagination">
 
-    @Html.PageLinks(Model.PageModel, x => Url.Action("List", new { page = x, category = Model.CurrentCategory }))
+    @Html.PageLinks(Model.PageModel, x => Url.Action("List", new { page = x, categoryId = Model.CurrentCategory }))
 </ul>
 
 

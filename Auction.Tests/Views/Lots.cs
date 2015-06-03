@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Auction.Controllers;
 using Auction.Domain.Abstract;
@@ -16,6 +17,29 @@ namespace Auction.Tests.Views
         public void ListView_Model()
         {
             // Arrange
+            Mock<ICategoriesRepository> category = new Mock<ICategoriesRepository>();
+            category.Setup(m => m.Categories).Returns(new[]
+            {
+                new Category
+                {
+                    CategoryId = 1,
+                    CategoryName = "Cat1",
+                    Lots = new List<Lot>()
+                },
+                new Category
+                {
+                    CategoryId = 2,
+                    CategoryName = "Cat2",
+                    Lots = new List<Lot>()
+                },
+                new Category
+                {
+                    CategoryId = 3,
+                    CategoryName = "Cat3",
+                    Lots = new List<Lot>()
+                }
+            }.AsQueryable());
+
             Mock<ILotsRepository> mock = new Mock<ILotsRepository>();
             mock.Setup(m => m.Lots).Returns(new Lot[]
             {
@@ -26,7 +50,8 @@ namespace Auction.Tests.Views
                 new Lot {LotID = 5, Name = "P5"}
             }.AsQueryable());
 
-            LotsController controller = new LotsController(mock.Object, null);
+
+            LotsController controller = new LotsController(mock.Object, category.Object);
             controller.PageSize = 3;
 
             // Act

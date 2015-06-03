@@ -40,8 +40,6 @@ namespace Auction.Tests.Controllers
             // Act
             ViewResult result = controller.About() as ViewResult;
 
-            // Assert
-            Assert.AreEqual("Your application description page.", result.ViewBag.Message);
         }
 
         [TestMethod]

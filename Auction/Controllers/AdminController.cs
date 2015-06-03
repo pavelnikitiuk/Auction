@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Auction.Domain.Abstract;
 using Auction.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Auction.Controllers
 {
@@ -25,8 +27,19 @@ namespace Auction.Controllers
         [Authorize(Roles = "admin")]
         public ActionResult ManageUserRoles()
         {
-            var list = context.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
-            return View(list);
+            var roles =
+                context.Roles.OrderBy(r => r.Name)
+                    .Select(rr => new UserRolesModel() {RoleId = rr.Id, Role = rr.Name})
+                    .ToList();
+            var users =
+                context.Users.OrderBy(r => r.UserName)
+                    .Select(rr => new UsersModel {UserId = rr.Id, Username = rr.UserName});
+
+            var model = new ManageUserRoleModel {Roles = roles, Users = users};
+            
+    
+           // var list = context.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Id, Text = rr.Name }).ToList();
+            return View(model);
         }
 
         /// <summary>
@@ -42,17 +55,18 @@ namespace Auction.Controllers
         {
             if (!ModelState.IsValid)
                 return Json("Illegal operation");
-            ApplicationUser user = context.Users.FirstOrDefault(u => u.UserName.Equals(userName, StringComparison.CurrentCultureIgnoreCase));
+            ApplicationUser user = context.Users.Find(userName);
+            IdentityRole role = context.Roles.Find(roleName);
+            if (user==null || role == null)
+                return Json("Unknown user or role");
             var account = new AccountController();
-            if (user == null)
-                return Json("Unknown user");
-            account.UserManager.AddToRole(user.Id, roleName);
-            if (roleName == "seller")
+            account.UserManager.AddToRole(user.Id, role.Name);
+            if (role.Name == "seller")
             {
                 user.IsSeller = true;
                 context.SaveChanges();
             }
-            return Json(String.Format("The user {0} has been successfully added to the right {1}",user.UserName,roleName));
+            return Json(String.Format("The user {0} has been successfully added to the right {1}",user.UserName,role.Name));
         }
         /// <summary>
         /// Get user rolers
@@ -67,12 +81,10 @@ namespace Auction.Controllers
                 return Json("Illegal operation");
             if (string.IsNullOrWhiteSpace(userName))
                 return Json("Type something", JsonRequestBehavior.AllowGet);
-
-            ApplicationUser user = context.Users.FirstOrDefault(u => u.UserName.Equals(userName, StringComparison.CurrentCultureIgnoreCase));
-            var account = new AccountController();
+            ApplicationUser user = context.Users.Find(userName);
             if (user == null)
                return Json("Unknown user", JsonRequestBehavior.AllowGet);
-
+            var account = new AccountController();
             var list = account.UserManager.GetRoles(user.Id);
             return Json(list, JsonRequestBehavior.AllowGet);
 
@@ -91,20 +103,21 @@ namespace Auction.Controllers
             if (!ModelState.IsValid)
                 return Json("Illegal operation");
             var account = new AccountController();
-            ApplicationUser user = context.Users.FirstOrDefault(u => u.UserName.Equals(userName, StringComparison.CurrentCultureIgnoreCase));
+            ApplicationUser user = context.Users.Find(userName);
+            IdentityRole role = context.Roles.Find(roleName);
             if (user == null)
                 return Json("Unknown User");
-            if (account.UserManager.IsInRole(user.Id, roleName))
+            if (account.UserManager.IsInRole(user.Id, role.Name))
             {
-                account.UserManager.RemoveFromRole(user.Id, roleName);
-                if (roleName == "seller")
+                account.UserManager.RemoveFromRole(user.Id, role.Name);
+                if (role.Name == "seller")
                 {
                     user.IsSeller = null;
                     context.SaveChanges();
                 }
             }
 
-            return Json(String.Format("The user {0} has the right successfully removed {1}",userName,roleName));
+            return Json(String.Format("The user {0} has the right successfully removed {1}",user.UserName,role.Name));
         }
 
         /// <summary>
@@ -117,11 +130,10 @@ namespace Auction.Controllers
         public ViewResult ModeraotorControl()
         {
             var list = categoriesRepository.Categories.Select(x => x.CategoryName).OrderBy(x => x);
-            var users = context.Users.Where(x => x.IsSeller == false).Select(x=>x.UserName);
             return View(new ModeratorModel
             {
                 Categories = list,
-                Users = users
+                Users = context.Users.Where(x => x.IsSeller == false).Select(x=>new UsersModel{UserId = x.Id, Username = x.UserName})
             });
         }
         /// <summary>
@@ -162,17 +174,17 @@ namespace Auction.Controllers
         /// <summary>
         /// Add role seller to user
         /// </summary>
-        /// <param name="userName">username</param>
+        /// <param name="userId">userId</param>
         /// <returns>ModeraorControl page</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "admin")]
         [Authorize(Roles = "moderator")]
-        public ActionResult AddSeller(string userName)
+        public ActionResult AddSeller(string userId)
         {
             if (!ModelState.IsValid)
                 return RedirectToAction("ModeraotorControl");
-            ApplicationUser user = context.Users.FirstOrDefault(u => u.UserName.Equals(userName, StringComparison.CurrentCultureIgnoreCase));
+            ApplicationUser user = context.Users.Find(userId);
             var account = new AccountController();
             if (user != null)
             {

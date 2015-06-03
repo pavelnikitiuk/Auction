@@ -81,6 +81,7 @@
     <Compile Include="Abstract\ICategoriesRepository.cs" />
     <Compile Include="Abstract\ILotsRepository.cs" />
     <Compile Include="DBase\AuctionDbContext.cs" />
+    <Compile Include="DBase\BaseRepository.cs" />
     <Compile Include="DBase\BidRepository.cs" />
     <Compile Include="DBase\CategoryRepository.cs" />
     <Compile Include="DBase\LotRepository.cs" />

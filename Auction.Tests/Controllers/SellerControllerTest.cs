@@ -111,7 +111,15 @@ namespace Auction.Tests.Controllers
                     CategoryName = "Cat3",
                 }
             }.AsQueryable());
-            SellerController controller = new SellerController(null, category.Object);
+            Mock<ILotsRepository> mock = new Mock<ILotsRepository>();
+            mock.Setup(m => m.Lots).Returns(new[]
+            {
+                new Lot {LotID = 1, Name = "P1", IsCompleted = false},
+                new Lot {LotID = 2, Name = "P2", IsCompleted = false},
+                new Lot {LotID = 3, Name = "P3", IsCompleted = false},
+                new Lot {LotID = 4, Name = "P4", IsCompleted = false},
+            }.AsQueryable());
+            SellerController controller = new SellerController(mock.Object, category.Object);
             controller.ModelState.Clear();
             SellModel q = new SellModel { Name = "P1", Files = new List<HttpPostedFileBase>(),Description = "1"};
             //Act

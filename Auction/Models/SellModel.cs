@@ -27,7 +27,7 @@ namespace Auction.Models
         [EndTimeAtribute]
         public DateTime EndTime { get; set; }
 
-        public IEnumerable<SelectListItem> Categories { get; set; }
+        public IEnumerable<Categories> Categories { get; set; }
         [FileSizeAttribute(10000000, ErrorMessage = "Maximum file size should not exceed 10MB")]
 
         public IEnumerable<HttpPostedFileBase> Files { get; set; }

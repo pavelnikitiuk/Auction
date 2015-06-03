@@ -16,9 +16,6 @@ namespace Auction
     {
         protected void Application_Start()
         {
-           //Database.SetInitializer<ApplicationDbContext>(null);
-           //Database.SetInitializer<ApplicationDbContext>(new AppDbInitializer());
-
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
@@ -31,9 +28,7 @@ namespace Auction
             
            // JobScheduler.Start();
 
-            //var timer = new System.Timers.Timer() { Interval = 60000 };
-            //timer.Elapsed += (sender, args) => Workflow.LotEndChecker.SearchEndedLots();
-            //timer.Start();
+            
         }
     }
 }

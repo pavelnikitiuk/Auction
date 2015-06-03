@@ -17,6 +17,28 @@ namespace Auction.Tests.Controllers
         public void Paginate_Tes()
         {
             // Arrange
+            Mock<ICategoriesRepository> category = new Mock<ICategoriesRepository>();
+            category.Setup(m => m.Categories).Returns(new[]
+            {
+                new Category
+                {
+                    CategoryId = 1,
+                    CategoryName = "Cat1",
+                    Lots = new List<Lot>()
+                },
+                new Category
+                {
+                    CategoryId = 2,
+                    CategoryName = "Cat2",
+                    Lots = new List<Lot>()
+                },
+                new Category
+                {
+                    CategoryId = 3,
+                    CategoryName = "Cat3",
+                    Lots = new List<Lot>()
+                }
+            }.AsQueryable());
             Mock<ILotsRepository> mock = new Mock<ILotsRepository>();
             mock.Setup(m => m.Lots).Returns(new[] {
             new Lot {LotID = 1, Name = "P1",IsCompleted = false},
@@ -24,7 +46,7 @@ namespace Auction.Tests.Controllers
             new Lot {LotID = 3, Name = "P3",IsCompleted = false},
             new Lot {LotID = 4, Name = "P4",IsCompleted = false},
           }.AsQueryable());
-            LotsController controller = new LotsController(mock.Object, null) { PageSize = 3 };
+            LotsController controller = new LotsController(mock.Object, category.Object) { PageSize = 3 };
 
             // Act
             LotsListViewModel result = (LotsListViewModel)controller.List(null, 2).Model;
@@ -45,16 +67,19 @@ namespace Auction.Tests.Controllers
                 {
                     CategoryId = 1,
                     CategoryName = "Cat1",
+                    Lots = new List<Lot>()
                 },
                 new Category
                 {
-                    CategoryId = 1,
+                    CategoryId = 2,
                     CategoryName = "Cat2",
+                    Lots = new List<Lot>()
                 },
                 new Category
                 {
-                    CategoryId = 1,
+                    CategoryId = 3,
                     CategoryName = "Cat3",
+                    Lots = new List<Lot>()
                 }
             }.AsQueryable());
             Mock<ILotsRepository> mock = new Mock<ILotsRepository>();
@@ -67,10 +92,13 @@ namespace Auction.Tests.Controllers
                 new Lot {LotID = 5, Name = "P5", Category = category.Object.Categories.ToList()[2]}
             }.AsQueryable());
 
+            category.Object.Categories.ToList()[1].Lots.Add(mock.Object.Lots.ToList()[1]);
+            category.Object.Categories.ToList()[1].Lots.Add(mock.Object.Lots.ToList()[3]);
+
             LotsController controller = new LotsController(mock.Object, category.Object) { PageSize = 3 };
 
             // Action
-            Lot[] result = ((LotsListViewModel)controller.List("Cat2", 1).Model).Lots.ToArray();
+            Lot[] result = ((LotsListViewModel)controller.List(2, 1).Model).Lots.ToArray();
 
             // Assert
             Assert.AreEqual(result.Length, 2);
@@ -90,16 +118,19 @@ namespace Auction.Tests.Controllers
                 {
                     CategoryId = 1,
                     CategoryName = "Cat1",
+                    Lots = new List<Lot>()
                 },
                 new Category
                 {
-                    CategoryId = 1,
+                    CategoryId = 2,
                     CategoryName = "Cat2",
+                    Lots = new List<Lot>()
                 },
                 new Category
                 {
-                    CategoryId = 1,
+                    CategoryId = 3,
                     CategoryName = "Cat3",
+                    Lots = new List<Lot>()
                 }
             }.AsQueryable());
             Mock<ILotsRepository> mock = new Mock<ILotsRepository>();
@@ -111,20 +142,24 @@ namespace Auction.Tests.Controllers
                 new Lot {LotID = 4, Name = "P4", Category = category.Object.Categories.ToList()[1],IsCompleted = false},
                 new Lot {LotID = 5, Name = "P5", Category = category.Object.Categories.ToList()[2],IsCompleted = false}
             }.AsQueryable());
-
+            category.Object.Categories.ToList()[0].Lots.Add(mock.Object.Lots.ToList()[0]);
+            category.Object.Categories.ToList()[1].Lots.Add(mock.Object.Lots.ToList()[1]);
+            category.Object.Categories.ToList()[0].Lots.Add(mock.Object.Lots.ToList()[2]);
+            category.Object.Categories.ToList()[1].Lots.Add(mock.Object.Lots.ToList()[3]);
+            category.Object.Categories.ToList()[2].Lots.Add(mock.Object.Lots.ToList()[4]);
             // Arrange - create a controller and make the page size 3 items
             LotsController target = new LotsController(mock.Object, category.Object);
             target.PageSize = 3;
 
             // Action - test the Lot counts for different categories
             int res1 = ((LotsListViewModel)target
-              .List("Cat1").Model).PageModel.TotalItems;
+              .List(1).Model).PageModel.TotalItems;
             int res2 = ((LotsListViewModel)target
-              .List("Cat2").Model).PageModel.TotalItems;
+              .List(2).Model).PageModel.TotalItems;
             int res3 = ((LotsListViewModel)target
-              .List("Cat3").Model).PageModel.TotalItems;
+              .List(3).Model).PageModel.TotalItems;
             int resAll = ((LotsListViewModel)target
-              .List(null).Model).PageModel.TotalItems;
+              .List(0).Model).PageModel.TotalItems;
 
             // Assert
             Assert.AreEqual(res1, 2);

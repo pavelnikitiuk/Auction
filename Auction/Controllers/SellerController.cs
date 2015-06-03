@@ -31,11 +31,11 @@ namespace Auction.Controllers
         public ViewResult Sell()
         {
             var cat = categoriesRepository.Categories.Select(x => x.CategoryName).OrderBy(x => x);
-            IEnumerable<SelectListItem> list = (from category in cat select new SelectListItem { Text = category }).ToList();
+            IEnumerable<SelectListItem> list = cat.Select(x => new SelectListItem { Text = x });
             return View(new SellModel
             {
                 MinPrice = 1,
-                Categories =  list
+                Categories = categoriesRepository.Categories.Select(x => new Categories { Id = x.CategoryId, Name = x.CategoryName })
             });
         }
         /// <summary>
@@ -47,11 +47,12 @@ namespace Auction.Controllers
         [HttpPost]
         public ActionResult Sell(SellModel model, string categ)
         {
-            var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key, x.Value.Errors }).ToArray();
+            //var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key, x.Value.Errors }).ToArray();
             if (!ModelState.IsValid)
             {
-                var c = categoriesRepository.Categories.Select(x => x.CategoryName).OrderBy(x => x);
-                model.Categories = (from category in c select new SelectListItem { Text = category }).ToList();
+                model.Categories =
+                    categoriesRepository.Categories.Select(
+                        x => new Categories {Id = x.CategoryId, Name = x.CategoryName});
                 
                 return View(model);
             }
@@ -75,7 +76,7 @@ namespace Auction.Controllers
             {
                 if (img != null)
                 {
-                    lot.Images.Add(new Image()
+                    lot.Images.Add(new Image
                     {
                         ImageMimeType = img.ContentType,
                         ImageData = new byte[img.ContentLength],
@@ -83,9 +84,10 @@ namespace Auction.Controllers
                     img.InputStream.Read(lot.Images[i++].ImageData, 0, img.ContentLength);
                 }
             }
-            
-            var cat = categoriesRepository.Categories.FirstOrDefault(x => x.CategoryName == categ);
-            categoriesRepository.AddLot(cat, lot);
+            var categoryId = Convert.ToInt32(categ);
+            var cat = categoriesRepository.Categories.FirstOrDefault(x => x.CategoryId == categoryId);
+            lot.Category = cat;
+            lotsRepository.Add(lot);
             return RedirectToAction("Lot", "Lots", new { lotId = lot.LotID });
         }
     }

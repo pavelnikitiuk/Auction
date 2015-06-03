@@ -246,6 +246,14 @@
     <Compile Include="Migrations\201505290912534_migration.Designer.cs">
       <DependentUpon>201505290912534_migration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506012242242_change.cs" />
+    <Compile Include="Migrations\201506012242242_change.Designer.cs">
+      <DependentUpon>201506012242242_change.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506012338500_cascade.cs" />
+    <Compile Include="Migrations\201506012338500_cascade.Designer.cs">
+      <DependentUpon>201506012338500_cascade.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelBinder\ModelBinder.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -253,6 +261,8 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LotModel.cs" />
     <Compile Include="Models\LotsListViewModel.cs" />
+    <Compile Include="Models\ManageUserRoleModel.cs" />
+    <Compile Include="Models\MenuModel.cs" />
     <Compile Include="Models\ModeratorModel.cs" />
     <Compile Include="Models\PageModel.cs" />
     <Compile Include="Models\RolesModel.cs" />
@@ -467,6 +477,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201505290912534_migration.resx">
       <DependentUpon>201505290912534_migration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506012242242_change.resx">
+      <DependentUpon>201506012242242_change.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506012338500_cascade.resx">
+      <DependentUpon>201506012338500_cascade.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

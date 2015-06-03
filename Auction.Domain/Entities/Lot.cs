@@ -55,5 +55,6 @@ namespace Auction.Domain.Entities
         /// Lot's category
         /// </summary>
         public virtual Category Category { get; set; }
+
     }
 }

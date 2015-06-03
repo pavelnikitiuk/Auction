@@ -2,7 +2,7 @@
 @using Action = Antlr.Runtime.Misc.Action
 @model LotsListViewModel
 @{
-    ViewBag.Title = @Model.CurrentCategory??"All";
+    ViewBag.Title = @Model.CurrentCategoryName;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -11,7 +11,7 @@
 
 }
 
-<h2>@Model.CurrentCategory</h2>
+<h2>@Model.CurrentCategoryName</h2>
 @{ int i = 1; }
 <div class="container img-rounded" style="background-color: white; margin-top: 20px; color: black">
     @foreach (var l in Model.Lots)
@@ -23,7 +23,7 @@
 </div>
 <ul class="pagination">
 
-    @Html.PageLinks(Model.PageModel, x => Url.Action("List", new { page = x, category = Model.CurrentCategory }))
+    @Html.PageLinks(Model.PageModel, x => Url.Action("List", new { page = x, categoryId = Model.CurrentCategoryId }))
 </ul>
 
 

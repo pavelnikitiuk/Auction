@@ -1,4 +1,4 @@
-﻿@model IEnumerable<string>
+﻿@model IEnumerable<Auction.Models.MenuModel>
 <li>
     @Html.RouteLink("All",
         new
@@ -11,12 +11,12 @@
 @foreach (var link in Model)
 {
     <li>
-        @Html.RouteLink(link,
+        @Html.RouteLink(link.CategoryName,
         new
     {
         controller = "Lots",
         action = "List",
-        category = link,
+        categoryId = link.CategoryId,
         page = 1
     })
     </li>

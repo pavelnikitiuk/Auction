@@ -127,3 +127,5 @@ D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction\bin\ru\System.Spa
 D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction\bin\zh-Hans\System.Spatial.resources.dll
 D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction\bin\zh-Hant\System.Spatial.resources.dll
 D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction\obj\Debug\Auction.Migrations.migration.resources
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction\obj\Debug\Auction.Migrations.change.resources
+D:\Clouds\Dropbox\Epam Project\Auction Project\Auction\Auction\obj\Debug\Auction.Migrations.cascade.resources

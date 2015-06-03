@@ -7,6 +7,7 @@ namespace Auction.Models
     {
         public IEnumerable<Lot> Lots { get; set; }
         public PageModel PageModel { get; set; }
-        public string CurrentCategory { get; set; }
+        public int? CurrentCategoryId { get; set; }
+        public string CurrentCategoryName { get; set; }
     }
 }

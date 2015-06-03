@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using Auction.Domain.Abstract;
 using Auction.Domain.Entities;
@@ -11,13 +13,12 @@ namespace Auction.Controllers
     {
         private ILotsRepository lotsRepository;
         private ICategoriesRepository categoriesRepository;
-        public int PageSize = 10;
+        public int PageSize = 5;
         public LotsController(ILotsRepository lotsRepository, ICategoriesRepository categoriesRepository)
         {
             this.lotsRepository = lotsRepository;
             this.categoriesRepository = categoriesRepository;
         }
-
         /// <summary>
         /// Search lot
         /// </summary>
@@ -27,14 +28,16 @@ namespace Auction.Controllers
         [HttpGet]
         public ActionResult SearchLot(string search, int page = 1)
         {
+            if (search == null)
+                search = "";
             if (!ModelState.IsValid)
                 return RedirectToAction("List", "Lots");
             var allLots = lotsRepository.Lots.Where(p => p.Name.Contains(search) && p.IsCompleted == false);
             var count = allLots.Count();
             var lots = allLots.OrderBy(p => p.LotID)
-                    .Skip((page - 1)*PageSize)
+                    .Skip((page - 1) * PageSize)
                     .Take(PageSize);
-                    
+
             LotsListViewModel model = new LotsListViewModel
             {
                 Lots = lots,
@@ -44,11 +47,11 @@ namespace Auction.Controllers
                     ItemsPerPage = PageSize,
                     TotalItems = count
                 },
-                CurrentCategory = search
+                CurrentCategoryName = search,
             };
             return View(model);
         }
-            
+
         /// <summary>
         /// Lot page
         /// </summary>
@@ -60,7 +63,7 @@ namespace Auction.Controllers
             if (lotId == null)
                 return RedirectToAction("List");
             var lot = lotsRepository.Lots.FirstOrDefault(x => x.LotID == lotId);
-            if (lot != null) 
+            if (lot != null)
                 return View(lot);
             return RedirectToAction("List");
         }
@@ -102,7 +105,7 @@ namespace Auction.Controllers
             if (prod != null)
                 return View(new EditModel
                 {
-                    Categories = categoriesRepository.Categories.Select(x => x.CategoryName).OrderBy(x => x),
+                    Categories = categoriesRepository.Categories.Select(x => new Categories { Id = x.CategoryId, Name = x.CategoryName }).ToList(),
                     Description = prod.Description,
                     LotID = prod.LotID,
                     Name = prod.Name
@@ -113,15 +116,21 @@ namespace Auction.Controllers
         /// Edit post action
         /// </summary>
         /// <param name="model">Edit model</param>
-        /// <param name="categ">new category</param>
+        /// <param name="categId">new category</param>
         /// <returns>Edit Lot page</returns>
         [HttpPost]
         [Authorize(Roles = "admin")]
         [Authorize(Roles = "moderator")]
-        public ActionResult Edit(EditModel model, string categ)
+        public ActionResult Edit(EditModel model, string categId)
         {
+            int categoryId = Convert.ToInt32(categId);
             if (!ModelState.IsValid)
+            {
+                model.Categories =
+                    categoriesRepository.Categories.Select(
+                        x => new Categories { Id = x.CategoryId, Name = x.CategoryName }).ToList();
                 return View(model);
+            }
 
             Lot prod = lotsRepository.Lots.FirstOrDefault(p => p.LotID == model.LotID);
 
@@ -131,13 +140,13 @@ namespace Auction.Controllers
             prod.Name = model.Name;
             prod.Description = model.Description;
 
-            var cat = categoriesRepository.Categories.FirstOrDefault(x => x.CategoryName == categ);
+            var cat = categoriesRepository.Categories.FirstOrDefault(x => x.CategoryId == categoryId);
             if (cat == null)
             {
-                ModelState.AddModelError("",Resources.LotsControllerUnknownCategory);
+                ModelState.AddModelError("", Resources.LotsControllerUnknownCategory);
                 return View(model);
             }
-            lotsRepository.Edit(prod,cat);
+            lotsRepository.Edit(prod, cat);
             return RedirectToAction("Lot", "Lots", new { lotId = model.LotID });
 
         }
@@ -152,11 +161,12 @@ namespace Auction.Controllers
             Lot prod = lotsRepository.Lots.FirstOrDefault(p => p.LotID == lotId);
             if (prod != null)
             {
-                if (prod.Images.Any())
-                {
-                    var image = prod.Images[num];
-                    return File(image.ImageData, image.ImageMimeType);
-                }
+                if (prod.Images != null)
+                    if (prod.Images.Any())
+                    {
+                        var image = prod.Images[num];
+                        return File(image.ImageData, image.ImageMimeType);
+                    }
                 return File(System.IO.File.ReadAllBytes(HttpContext.Server.MapPath(Resources.DefaultImage)), Resources.DefaultImageType);
             }
             return null;
@@ -164,25 +174,31 @@ namespace Auction.Controllers
         /// <summary>
         /// List of Lots
         /// </summary>
-        /// <param name="category">Lot category</param>
+        /// <param name="categoryId">Lot category</param>
         /// <param name="page">Number of page</param>
         /// <returns>List lot page</returns>
         [HttpGet]
-        public ViewResult List(string category, int page = 1)
+        public ViewResult List(int? categoryId, int page = 1)
         {
-            
+            var selectCategory = categoriesRepository.Categories.FirstOrDefault(x => x.CategoryId == categoryId);
+            IEnumerable<Lot> categoryLots;
+            if (selectCategory == null)
+                categoryLots = lotsRepository.Lots;
+            else
+                categoryLots = selectCategory.Lots;
             LotsListViewModel model = new LotsListViewModel
             {
-                Lots = lotsRepository.Lots.Where(p => (category == null || p.Category.CategoryName == category)&&p.IsCompleted==false ).OrderBy(p => p.LotID).Skip((page - 1) * PageSize).Take(PageSize),
+                Lots = categoryLots.OrderBy(p => p.LotID)
+                    .Skip((page - 1) * PageSize)
+                    .Take(PageSize),
                 PageModel = new PageModel
                 {
                     CurrentPage = page,
                     ItemsPerPage = PageSize,
-                    TotalItems = category == null ?
-                        lotsRepository.Lots.Count(x => x.IsCompleted == false) :
-                        lotsRepository.Lots.Count(x => x.Category.CategoryName == category && x.IsCompleted == false)
+                    TotalItems = categoryLots.Count()
                 },
-                CurrentCategory = category
+                CurrentCategoryName = selectCategory == null ? "All" : selectCategory.CategoryName,
+                CurrentCategoryId = selectCategory == null ? null : (int?)selectCategory.CategoryId
             };
             return View(model);
         }

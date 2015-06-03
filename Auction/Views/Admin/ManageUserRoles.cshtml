@@ -1,4 +1,4 @@
-﻿@model List<SelectListItem>
+﻿@model Auction.Models.ManageUserRoleModel
 @{
     ViewBag.Title = "ManageUserRoles";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -43,9 +43,9 @@
     @Html.ValidationSummary(true)
     <div class="form-group">
         <label class="control-label">Username</label>
-        @Html.TextBox("UserName", null, new { @class = "form-control" })
+        @Html.DropDownList("UserName", Model.Users.Select(x => new SelectListItem { Text = x.Username, Value = x.UserId }), new { @class = "form-control" })
         <label class="control-label">Role Name</label>
-        @Html.DropDownList("RoleName", Model, new { @class = "form-control" })
+        @Html.DropDownList("RoleName", Model.Roles.Select(x=> new SelectListItem{Text = x.Role,Value = x.RoleId}), new { @class = "form-control" })
 
     </div>
     <input class="btn btn-success" type="submit" value="Add" />
@@ -68,7 +68,7 @@
 {
     <div class="form-group">
         <label class="control-label">Username</label>
-        @Html.TextBox("UserName", null, new { @class = "form-control" })
+        @Html.DropDownList("UserName", Model.Users.Select(x => new SelectListItem { Text = x.Username, Value = x.UserId }), new { @class = "form-control" })
     </div>
     <input class="btn btn-info" type="submit" value="Get Roles for this User" />
 }
@@ -97,9 +97,9 @@
 
     <div class="form-group">
         <label class="control-label">Username</label>
-        @Html.TextBox("UserName", null, new { @class = "form-control" })
+        @Html.DropDownList("UserName", Model.Users.Select(x => new SelectListItem { Text = x.Username, Value = x.UserId }), new { @class = "form-control" })
         <label class="control-label">Role Name</label>
-        @Html.DropDownList("RoleName", Model, new { @class = "form-control" })
+        @Html.DropDownList("RoleName", Model.Roles.Select(x=>new SelectListItem{Text = x.Role,Value = x.RoleId}), new { @class = "form-control" })
 
     </div>
 
