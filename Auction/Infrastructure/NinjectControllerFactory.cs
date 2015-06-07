@@ -4,6 +4,9 @@ using System.Web.Routing;
 using Auction.Domain.Abstract;
 using Ninject;
 using Auction.Domain.DBase;
+using Auction.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Auction.Infrastructure
 {
@@ -28,6 +31,8 @@ namespace Auction.Infrastructure
             NinjectKernel.Bind<ILotsRepository>().To<LotRepository>();
             NinjectKernel.Bind<IBidsRepository>().To<BidRepository>();
             NinjectKernel.Bind<ICategoriesRepository>().To<CategoryRepository>();
+
+            
 
         }
     }
