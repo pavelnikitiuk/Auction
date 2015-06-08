@@ -5,7 +5,6 @@
     @Html.AntiForgeryToken()
     <div class="form-group">
         @Html.Hidden("userId",Model.UserId)
-        <label class="label">@Model.Username</label>
-        <input type="submit" value="Make a sellor"/>
+        <input type="submit" class="btn btn-warning" value="@Model.Username" />
     </div>
 }

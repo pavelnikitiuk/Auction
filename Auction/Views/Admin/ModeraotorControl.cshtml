@@ -36,8 +36,10 @@
     </div>
     <input class="btn btn-danger" type="submit" value="Remove" />
 }
-@foreach (var x in Model.Users)
-{
-     Html.RenderPartial("SellersPartial", x); 
-}
-
+<h2>Want to be sellers</h2>
+<div class="form-group">
+    @foreach (var x in Model.Users)
+    {
+        Html.RenderPartial("SellersPartial", x);
+    }
+</div>
