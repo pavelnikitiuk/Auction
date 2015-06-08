@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using Auction.Domain.Abstract;
 using Auction.Models;
+using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -59,7 +60,7 @@ namespace Auction.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "admin")]
-        public JsonResult RoleAddToUser(string userId, string roleId)
+        public async Task<JsonResult> RoleAddToUser(string userId, string roleId)
         {
             if (!ModelState.IsValid)
                 return Json("Illegal operation");
@@ -67,7 +68,7 @@ namespace Auction.Controllers
             IdentityRole role = context.Roles.Find(roleId);
             if (user == null || role == null)
                 return Json("Unknown user or role");
-            UserManager.AddToRole(user.Id, role.Name);
+            await UserManager.AddToRoleAsync(user.Id, role.Name);
             if (role.Name == "seller")
             {
                 user.IsSeller = true;
@@ -104,7 +105,7 @@ namespace Auction.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "admin")]
-        public JsonResult DeleteRoleForUser(string userId, string roleId)
+        public async Task<JsonResult> DeleteRoleForUser(string userId, string roleId)
         {
             if (!ModelState.IsValid)
                 return Json("Illegal operation");
@@ -114,7 +115,7 @@ namespace Auction.Controllers
                 return Json("Unknown User");
             if (UserManager.IsInRole(user.Id, role.Name))
             {
-                UserManager.RemoveFromRole(user.Id, role.Name);
+                await UserManager.RemoveFromRoleAsync(user.Id, role.Name);
                 if (role.Name == "seller")
                 {
                     user.IsSeller = null;
@@ -185,7 +186,7 @@ namespace Auction.Controllers
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "admin")]
         [Authorize(Roles = "moderator")]
-        public ActionResult AddSeller(string userId)
+        public async Task<ActionResult> AddSeller(string userId)
         {
             if (!ModelState.IsValid)
                 return RedirectToAction("ModeraotorControl");
@@ -194,7 +195,7 @@ namespace Auction.Controllers
             {
                 user.IsSeller = true;
                 context.SaveChanges();
-                UserManager.AddToRole(user.Id, "seller");
+                await UserManager.AddToRoleAsync(user.Id, "seller");
             }
             return RedirectToAction("ModeraotorControl");
         }
