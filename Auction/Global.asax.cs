@@ -22,8 +22,6 @@ namespace Auction
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             NinjectControllerFactory factory = new NinjectControllerFactory();
             ControllerBuilder.Current.SetControllerFactory(factory);
-            Database.SetInitializer<ApplicationDbContext>(new DropCreateDatabaseIfModelChanges<ApplicationDbContext>());
-
             ModelBinders.Binders.DefaultBinder = new ModelBinder.ModelBinder();
             
            // JobScheduler.Start();

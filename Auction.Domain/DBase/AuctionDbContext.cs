@@ -11,6 +11,12 @@ namespace Auction.Domain.DBase
         public DbSet<Category> Categoryes { get; set; }
         public DbSet<Image> Images { get; set; }
 
+        public AuctionDbContext()
+            : base("AuctionDbContext")
+        {
+            Database.SetInitializer<Auction.Domain.DBase.AuctionDbContext>(new CreateDatabaseIfNotExists<Auction.Domain.DBase.AuctionDbContext>());
+        }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Lot>().HasMany(x => x.Bids).WithRequired(x => x.Lot).WillCascadeOnDelete();

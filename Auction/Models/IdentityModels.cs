@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data.Entity;
 
 namespace Auction.Models
 {
@@ -15,6 +16,7 @@ namespace Auction.Models
         public ApplicationDbContext()
             : base("AuctionUserDb")
         {
+            Database.SetInitializer<ApplicationDbContext>(new AppDbInitializer());
         }
     }
 }

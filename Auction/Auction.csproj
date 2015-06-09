@@ -257,6 +257,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelBinder\ModelBinder.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AppDbInitializer.cs" />
     <Compile Include="Models\EditModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LotModel.cs" />
