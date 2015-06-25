@@ -8,7 +8,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using Auction.Models;
 using Auction.Properties;
-
+using Auction.Anatation;
 namespace Auction.Controllers
 {
     [Authorize]
@@ -80,6 +80,7 @@ namespace Auction.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [CaptchaValidator]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)

@@ -143,6 +143,9 @@
       <HintPath>..\packages\Quartz.2.3.2\lib\net40\Quartz.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Recaptcha">
+      <HintPath>..\packages\recaptcha.1.0.5.0\lib\.NetFramework 4.0\Recaptcha.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -222,6 +225,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Anatation\AjaxAuthorizeAttribute.cs" />
+    <Compile Include="Anatation\CaptchaValidatorAttribute.cs" />
     <Compile Include="Anatation\CurrentPriceAtribute.cs" />
     <Compile Include="Anatation\EndTimeAtribute.cs" />
     <Compile Include="Anatation\FileSizeAttribute.cs" />

@@ -15,5 +15,11 @@ namespace Auction.HtmlHelpers
             return evaluation?value:MvcHtmlString.Empty;
             
         }
+
+        public static UrlHelper IsRole(this UrlHelper value, bool evaluation)
+        {
+            return evaluation ? value : MvcHtmlString.Empty;
+
+        }
     }
 }
